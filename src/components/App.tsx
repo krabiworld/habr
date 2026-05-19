@@ -31,10 +31,6 @@ import useUserDataFetch from 'src/hooks/useUserDataFetch'
 import UpdateNotification from 'src/components/blocks/UpdateNotification'
 import useGetDownvoteReasons from 'src/hooks/useGetDownvoteReasons'
 import { useEffect } from 'react'
-import { ErrorBoundary } from '@sentry/react'
-import ErrorPage from 'src/pages/Error'
-import RebrandingModal from 'src/components/modals/Rebranding'
-import { Analytics } from '@vercel/analytics/react'
 
 interface StyleProps {
   theme: Theme
@@ -168,22 +164,18 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ErrorBoundary fallback={(props) => <ErrorPage {...props} />}>
-        <SnackbarProvider>
-          <SideNavigationDrawer />
-          <div className={classes.appWrapper}>
-            <div className={classes.app}>
-              <ScrollRestoration />
-              <UpdateNotification />
-              <AppBar />
-              <BottomBar />
-              <AppRouter />
-            </div>
+      <SnackbarProvider>
+        <SideNavigationDrawer />
+        <div className={classes.appWrapper}>
+          <div className={classes.app}>
+            <ScrollRestoration />
+            <UpdateNotification />
+            <AppBar />
+            <BottomBar />
+            <AppRouter />
           </div>
-          <RebrandingModal />
-          <Analytics />
-        </SnackbarProvider>
-      </ErrorBoundary>
+        </div>
+      </SnackbarProvider>
     </ThemeProvider>
   )
 }

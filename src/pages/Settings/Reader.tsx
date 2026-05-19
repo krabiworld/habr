@@ -247,7 +247,7 @@ const Reader = () => {
                 </Typography>{' '}
                 на{' '}
                 <Typography component="span" color="primary">
-                  geekr.vercel.app
+                  habr.floof.fans
                 </Typography>
               </>
             }

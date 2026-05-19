@@ -16,20 +16,6 @@ export const modeParams = {
   alltime: { period: 'alltime', sort: 'date' },
 }
 
-export const modeTokenPaths = {
-  all: 'posts/all',
-  top0: 'posts/all/top0',
-  top10: 'posts/all/top10',
-  top25: 'posts/all/top25',
-  top50: 'posts/all/top50',
-  top100: 'posts/all/top100',
-  daily: 'top/daily',
-  weekly: 'top/weekly',
-  monthly: 'top/monthly',
-  yearly: 'top/yearly',
-  alltime: 'top/alltime',
-}
-
 interface Params {
   mode: Mode
   page: number

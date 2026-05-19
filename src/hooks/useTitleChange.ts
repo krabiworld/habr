@@ -2,7 +2,7 @@ import useRoute from './useRoute'
 
 const useTitleChange = () => {
   const route = useRoute()
-  const newTitle = route.title ? route.title + ' | geekr.' : 'geekr.'
+  const newTitle = route.title ? route.title + ' | habr' : 'habr'
   if (document.title !== newTitle) document.title = newTitle
 }
 

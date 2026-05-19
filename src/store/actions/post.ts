@@ -146,6 +146,7 @@ export const getDownvoteReasons =
 /**
  * Parse existing comments
  * @param id Post ID
+ * @param options
  */
 export const parsePostComments =
   (id: number | string, options: Partial<GetPostCommentsOptions> = {}) =>
@@ -176,6 +177,7 @@ export const parsePostComments =
 /**
  * Gets post comments and dispatches the data to the `post` store
  * @param id Post ID
+ * @param options
  */
 export const getPostComments =
   (id: number | string, options: Partial<GetPostCommentsOptions> = {}) =>
@@ -230,7 +232,7 @@ export const setPostCommentSize =
 
 /**
  * Gets post comments and dispatches the data to the `post` store
- * @param id Post ID
+ * @param alias
  */
 export const getCompany =
   // TODO: fix types

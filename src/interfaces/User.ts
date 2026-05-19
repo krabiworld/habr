@@ -42,11 +42,6 @@ export interface UserWhois {
   }
 }
 
-export interface UserTag {
-  name: string
-  count: number
-}
-
 export interface UserCompanies {
   pagesCount: number
   companyIds: string[]

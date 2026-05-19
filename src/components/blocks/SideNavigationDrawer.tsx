@@ -22,13 +22,11 @@ import { Link } from 'react-router-dom'
 import { Skeleton } from '@material-ui/lab'
 import {
   Icon24DoorArrowLeftOutline,
-  Icon24InfoCircleOutline,
 } from '@vkontakte/icons'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Route } from 'src/config/routes'
 import { FetchingState } from 'src/interfaces'
 import UserMenu from './UserMenu'
-import RUVDSPromoBlock from './RUVDSPromo/Block'
 
 const NAVIGATION_TABS = makeNavigationTabs(28, 28, true)
 const avatarWidth = 32
@@ -166,8 +164,7 @@ const useProfileButtonStyles = makeStyles((theme) => ({
     textAlign: 'start',
   },
 }))
-
-const useAboutButtonStyles = makeStyles((theme) => ({
+makeStyles((theme) => ({
   rootWrapper: {
     margin: theme.spacing(0, 2),
   },
@@ -294,29 +291,6 @@ const ProfileButton: React.FC = () => {
   )
 }
 
-const AboutButton = () => {
-  const classes = useAboutButtonStyles()
-  const history = useHistory()
-
-  return (
-    <div className={classes.rootWrapper}>
-      <ButtonBase
-        onClick={() =>
-          history.push('/geekr-about', {
-            from: location.pathname,
-          })
-        }
-        className={classes.root}
-      >
-        <div className={classes.header}>
-          <Icon24InfoCircleOutline width={24} height={24} />
-          <Typography className={classes.text}>О сайте</Typography>
-        </div>
-      </ButtonBase>
-    </div>
-  )
-}
-
 const SideNavigationDrawer = () => {
   const theme = useTheme()
   const route = useRoute()
@@ -353,7 +327,7 @@ const SideNavigationDrawer = () => {
       <div className={classes.drawerContainer}>
         <div className={classes.logoHolder} onClick={goHome}>
           <Typography variant="h6" className={classes.logo}>
-            geekr.
+            habr
           </Typography>
           <Divider className={classes.logoDivider} />
         </div>
@@ -362,11 +336,6 @@ const SideNavigationDrawer = () => {
           {NAVIGATION_TABS.map((e, i) => (
             <NavButton current={isCurrent(e, route)} key={i} {...e} />
           ))}
-        </div>
-        <div className={classes.bottomBlock}>
-          <RUVDSPromoBlock />
-          <Divider className={classes.logoDivider} />
-          <AboutButton />
         </div>
       </div>
     </Drawer>

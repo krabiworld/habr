@@ -610,7 +610,7 @@ const PreviewBox = ({ currentTheme }: { currentTheme: CustomTheme }) => {
                   color="textPrimary"
                   className={classes.headerTitle}
                 >
-                  habra.
+                  habr
                 </Typography>
               </div>
               <div className={classes.dividerWrapper}>

@@ -123,9 +123,6 @@ const NewsItem = React.memo(({ data }: { data: Post }): React.ReactElement => {
 const NewsBlock = ({ hubAlias }: { hubAlias?: string }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const isHidden = useSelector(
-    (store) => store.settings.interfaceFeed.hideNewsBlock
-  )
   const isFetching = useSelector((state) => state.news.block.fetching)
   const fetchError = useSelector((state) => state.news.block.error)
   const news = useSelector((state) => state.news.block.data)
@@ -148,8 +145,6 @@ const NewsBlock = ({ hubAlias }: { hubAlias?: string }) => {
       Все новости
     </Button>
   )
-
-  if (isHidden) return null
 
   return (
     <Paper className={classes.root} elevation={0}>

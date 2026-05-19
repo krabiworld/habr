@@ -13,7 +13,6 @@ import {
   Icon243SquareOutline,
   Icon28ArticleOutline,
   Icon28GlobeOutline,
-  Icon28PrivacyOutline,
   Icon28DownloadOutline,
 } from '@vkontakte/icons'
 
@@ -37,11 +36,6 @@ const items = [
     icon: Icon28ArticleOutline,
     to: '/reader',
     text: 'Параметры чтения',
-  },
-  {
-    icon: Icon28PrivacyOutline,
-    to: '/privacy',
-    text: 'Приватность',
   },
   {
     icon: Icon28GlobeOutline,

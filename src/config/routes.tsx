@@ -11,7 +11,6 @@ import SettingsBlacklist from 'src/pages/Settings/Blacklist'
 import SettingsNewTheme from 'src/pages/Settings/NewTheme'
 import SettingsInterface from 'src/pages/Settings/Interface'
 import SettingsReader from 'src/pages/Settings/Reader'
-import SettingsPrivacy from 'src/pages/Settings/Privacy'
 import SettingsImport from 'src/pages/Settings/ImportSettings'
 import SettingsLanguage from 'src/pages/Settings/Language'
 import Search from 'src/pages/Search'
@@ -20,15 +19,12 @@ import NotFound from 'src/pages/NotFound'
 import Thread from 'src/pages/Comments/Thread'
 import CommentsPage from 'src/pages/Comments'
 import getCachedMode from 'src/utils/getCachedMode'
-import AboutPage from 'src/pages/AboutPage'
 import Hubs from 'src/pages/Hubs/index'
 import User from 'src/pages/User/index'
 import { Redirect } from 'react-router'
 import Login from 'src/pages/Login'
 import { Theme } from '@material-ui/core'
-import Services from 'src/pages/Services'
 import Home from 'src/pages/Home/index'
-import Me from 'src/pages/Me'
 import UserArticles from 'src/pages/User/pages/Articles'
 import UserComments from 'src/pages/User/pages/Comments'
 import UserFavoriteArticles from 'src/pages/User/pages/FavArticles'
@@ -49,15 +45,6 @@ export interface Route {
 }
 
 export const routes: Route[] = [
-  {
-    path: '/services',
-    component: <Services />,
-    title: 'Хабы',
-    shouldShowAppBar: true,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'services',
-  },
   {
     path: '/auth',
     component: <Login />,
@@ -126,15 +113,6 @@ export const routes: Route[] = [
     alias: 'settingsInterface',
   },
   {
-    path: '/settings/privacy',
-    component: <SettingsPrivacy />,
-    title: 'Приватность',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => getContrastPaperColor(theme),
-    alias: 'settingsPrivacy',
-  },
-  {
     path: '/settings/language',
     component: <SettingsLanguage />,
     title: 'Настройки языка',
@@ -196,15 +174,6 @@ export const routes: Route[] = [
     shouldAppBarChangeColors: false,
     appBarColor: (theme) => getContrastPaperColor(theme),
     alias: 'settings',
-  },
-  {
-    path: '/geekr-about',
-    component: <AboutPage />,
-    title: 'О проекте',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: true,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'geekrAbout',
   },
   {
     path: ['/search', '/search/p/:page'],
@@ -328,14 +297,6 @@ export const routes: Route[] = [
     shouldAppBarChangeColors: false,
     appBarColor: (theme) => theme.palette.background.paper,
     alias: 'feed',
-  },
-  {
-    path: '/me',
-    component: <Me />,
-    shouldShowAppBar: true,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'me',
   },
   {
     path: '/',

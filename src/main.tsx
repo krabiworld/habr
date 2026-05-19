@@ -12,20 +12,9 @@ import 'dayjs/locale/ru'
 import 'src/config/i18n'
 import { BrowserRouter as Router } from 'react-router-dom'
 import 'react-photoswipe/dist/photoswipe.css'
-import { SENTRY_DSN } from 'src/config/constants'
 import * as userSettingsUtils from 'src/utils/userSettings'
-import * as Sentry from '@sentry/react'
-import { Integrations } from '@sentry/tracing'
 
 const userSettings = userSettingsUtils.get()
-
-Sentry.init({
-  dsn: SENTRY_DSN,
-  integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 0,
-  environment: import.meta.env.MODE,
-  enabled: import.meta.env.PROD,
-})
 
 dayjs.locale(userSettings.language.interface || 'ru')
 dayjs.extend(relativeTimePlugin)

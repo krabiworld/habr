@@ -180,7 +180,7 @@ const AppBarComponent = () => {
                 variant="h6"
                 className={classes.headerTitle}
               >
-                geekr.
+                habr
               </Typography>
               <Offline
                 polling={{

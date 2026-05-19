@@ -157,20 +157,6 @@ const Interface = () => {
             }
           />
           <SwitchButton
-            primary={'Скрыть новости'}
-            secondary={
-              'На главной странице не будет отображаться блок с новостями'
-            }
-            checked={userSettings.interfaceFeed.hideNewsBlock}
-            onChange={() =>
-              setInterfaceSettings(
-                'interfaceFeed',
-                'hideNewsBlock',
-                !userSettings.interfaceFeed.hideNewsBlock
-              )
-            }
-          />
-          <SwitchButton
             primary={'Открывать статьи в новой вкладке'}
             secondary={isPWA ? 'Функция отключена в PWA приложении' : ''}
             checked={userSettings.interfaceFeed.openPostsInNewTab}

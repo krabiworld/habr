@@ -320,7 +320,7 @@ export const PostItem = ({
   const score = formatNumber(statistics?.score || 0)
   const title = parse(unparsedTitle?.replace(NBSP_CHAR, WHITESPACE_CHAR) || '')
   const reads = formatNumber(statistics?.readingCount || 0)
-  let favoritesCountAddAmount = 0
+  let favoritesCountAddAmount: number
   if (postBookmarked) {
     favoritesCountAddAmount = isBookmarked ? 0 : -1
   } else {

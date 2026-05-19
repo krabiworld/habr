@@ -46,8 +46,8 @@ const Thread: React.FC = () => {
         e.level === THREAD_LEVEL * ((rootComment?.threadLevel || 0) + 1) - 1 &&
         i > (rootIndex || 0)
     )
-    const slice = a?.slice(rootIndex, lastIndex)
-    return slice
+
+    return a?.slice(rootIndex, lastIndex)
   }, [comments, rootComment?.threadLevel, threadId])
   const shouldShowComments = commentsFetchingState === FetchingState.Fetched
 

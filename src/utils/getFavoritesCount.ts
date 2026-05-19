@@ -10,7 +10,7 @@ const getFavoritesCount = ({
 }) => {
   const postBookmarked = post?.relatedData?.bookmarked
   const favoritesCount = post.statistics.favoritesCount
-  let favoritesCountAddAmount = 0
+  let favoritesCountAddAmount: number
 
   if (postBookmarked) {
     favoritesCountAddAmount = isBookmarked ? 0 : -1

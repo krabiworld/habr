@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import { Paper, useMediaQuery, useTheme } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-import {
-  BOTTOM_BAR_HEIGHT,
-  makeNavigationTabs,
-  MIDDLE_WIDTH,
-} from 'src/config/constants'
+import { BOTTOM_BAR_HEIGHT, makeNavigationTabs, MIDDLE_WIDTH, } from 'src/config/constants'
 import getContrastPaperColor from 'src/utils/getContrastPaperColor'
 import { useRoute } from 'src/hooks'
 import TabObject from 'src/interfaces/NavigationTabObject'
@@ -44,14 +40,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const findPathValue = (route: Route): number => {
-  const res = NAVIGATION_TABS.findIndex((e) => {
+  return NAVIGATION_TABS.findIndex((e) => {
     if (Array.isArray(e.match)) {
       return e.match.some((k) => k === route.alias)
     } else {
       return e.match === route.alias
     }
   })
-  return res
 }
 
 const BottomBar = () => {

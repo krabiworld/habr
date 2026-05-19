@@ -4,7 +4,7 @@ import Sidebar from 'src/components/blocks/Sidebar'
 import { getMostReading, getTopCompanies } from 'src/store/actions/home'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'src/hooks'
-import { Company, FetchingState, Post } from 'src/interfaces'
+import { FetchingState, Post } from 'src/interfaces'
 import { makeStyles, lighten, darken, alpha } from '@material-ui/core/styles'
 import LinkToOutsidePage from 'src/components/blocks/LinkToOutsidePage'
 import VisibilityIcon from '@material-ui/icons/Visibility'
@@ -12,9 +12,6 @@ import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
 import getPostLink from 'src/utils/getPostLink'
 import parse from 'html-react-parser'
 import formatNumber from 'src/utils/formatNumber'
-import purple from '@material-ui/core/colors/purple'
-import { Button } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { Skeleton } from '@material-ui/lab'
 
 const ld = { lighten, darken }
@@ -22,19 +19,6 @@ const useSkeletonStyles = makeStyles((theme) => ({
   skeleton: {
     backgroundColor: theme.palette.action.hover,
     borderRadius: 8,
-  },
-}))
-
-const useStyles = makeStyles((theme) => ({
-  companiesChildrenContainerProps: {
-    marginBottom: 12,
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(0, 2),
-  },
-  button: {
-    marginTop: 12,
-    width: '100%',
   },
 }))
 
@@ -94,51 +78,6 @@ const usePostItemStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
   },
 }))
-
-const useCompanyItemStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none !important',
-    background: 'transparent !important',
-    marginTop: theme.spacing(2),
-    color: theme.palette.text.primary,
-    '&:first-child': {
-      marginTop: 0,
-    },
-  },
-  avatar: {
-    marginRight: theme.spacing(1.5),
-    width: 36,
-    height: 36,
-    borderRadius: 4,
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: 700,
-    lineHeight: '18px',
-  },
-  rating: {
-    marginLeft: 'auto',
-    fontSize: 13,
-    fontWeight: 700,
-    lineHeight: '18px',
-    color: theme.palette.type === 'dark' ? purple[200] : purple.A700,
-  },
-}))
-
-const CompanyItem: React.FC<{ data: Company }> = ({ data }) => {
-  const classes = useCompanyItemStyles()
-  const companyLink = '/company/' + data.alias
-
-  return (
-    <LinkToOutsidePage className={classes.root} to={companyLink}>
-      <img className={classes.avatar} alt={data.alias} src={data.imageUrl} />
-      <span className={classes.title}>{parse(data.titleHtml)}</span>
-      <span className={classes.rating}>{data.statistics.rating}</span>
-    </LinkToOutsidePage>
-  )
-}
 
 const PostItem: React.FC<{ data: Post }> = ({ data }) => {
   const classes = usePostItemStyles()
@@ -251,38 +190,8 @@ const MostReadingSideBlockSkeleton = () => {
   )
 }
 
-const CompaniesSideBlockSkeleton = () => {
-  const classes = useSkeletonStyles()
-  const companyItemClasses = useCompanyItemStyles()
-  return (
-    <>
-      {[...Array(10)].map((_, i) => (
-        <div key={i} className={companyItemClasses.root}>
-          <Skeleton
-            variant="rect"
-            className={[classes.skeleton, companyItemClasses.avatar].join(' ')}
-          />
-          <Skeleton
-            variant="rect"
-            width={84}
-            height={14}
-            className={[classes.skeleton, companyItemClasses.title].join(' ')}
-          />
-          <Skeleton
-            variant="rect"
-            width={44}
-            height={14}
-            className={[classes.skeleton, companyItemClasses.rating].join(' ')}
-          />
-        </div>
-      ))}
-    </>
-  )
-}
-
 const HomeSidebar = () => {
   const dispatch = useDispatch()
-  const classes = useStyles()
   const mostReadingState = useSelector(
     (store) => store.home.sidebar.mostReading.state
   )
@@ -291,15 +200,6 @@ const HomeSidebar = () => {
   )
   const mostReading = useSelector(
     (store) => store.home.sidebar.mostReading.data
-  )
-  const topCompaniesState = useSelector(
-    (store) => store.home.sidebar.topCompanies.state
-  )
-  const topCompaniesFetchError = useSelector(
-    (store) => store.home.sidebar.topCompanies.fetchError
-  )
-  const topCompanies = useSelector(
-    (store) => store.home.sidebar.topCompanies.data
   )
 
   useEffect(() => {
@@ -312,48 +212,12 @@ const HomeSidebar = () => {
         mostReadingFetchError
       )
     }
-    if (topCompaniesState === FetchingState.Error) {
-      console.error(
-        'Fetch error in HomeSidebar (topCompanies):',
-        topCompaniesFetchError
-      )
-    }
     // TODO: fix deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Sidebar>
-      {topCompaniesState !== FetchingState.Error && (
-        <SideBlock
-          childrenContainerProps={{
-            className: classes.companiesChildrenContainerProps,
-          }}
-          title={'Лучшие компании'}
-        >
-          {topCompaniesState !== FetchingState.Fetched && (
-            <CompaniesSideBlockSkeleton />
-          )}
-          {topCompaniesState === FetchingState.Fetched &&
-            // TODO: fix types
-            //@ts-expect-error temporary fix
-            topCompanies.companyIds.map((e) => (
-              // TODO: fix types
-              //@ts-expect-error temporary fix
-              <CompanyItem data={topCompanies.companyRefs[e]} key={e} />
-            ))}
-          <Link
-            to={'/companies/p/1'}
-            style={{
-              textDecoration: 'none',
-            }}
-          >
-            <Button className={classes.button} size="small" color="primary">
-              Все компании
-            </Button>
-          </Link>
-        </SideBlock>
-      )}
       {mostReadingState !== FetchingState.Error && (
         <SideBlock title={'Читают сейчас'}>
           {mostReadingState !== FetchingState.Fetched && (

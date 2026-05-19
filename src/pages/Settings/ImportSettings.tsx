@@ -55,8 +55,7 @@ const Privacy = () => {
   const inputRef = useRef<HTMLInputElement>()
   const settingsString = btoa(JSON.stringify(storeSettings))
   const handleApplyClick = () => {
-    const value = inputRef.current?.value || ''
-    let newSettings = value
+    let newSettings = inputRef.current?.value || ''
 
     try {
       newSettings = JSON.parse(atob(newSettings))
