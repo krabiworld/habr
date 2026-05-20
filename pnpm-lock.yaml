@@ -102,9 +102,6 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0
     devDependencies:
-      '@types/history':
-        specifier: ^5.0.0
-        version: 5.0.0
       '@types/node':
         specifier: ^25.9.1
         version: 25.9.1
@@ -1161,10 +1158,6 @@ packages:
 
   '@types/history@4.7.11':
     resolution: {integrity: sha512-qjDJRrmvBMiTx+jyLxvLfJU7UznFuokDv4f3WRuriHKERccVpFU+8XMQUAbDzoiJCsmexxRExQeMwwCdamSKDA==}
-
-  '@types/history@5.0.0':
-    resolution: {integrity: sha512-hy8b7Y1J8OGe6LbAjj3xniQrj3v6lsivCcrmf4TzSgPzLkhIeKgc5IZnT7ReIqmEuodjfO8EYAuoFvIrHi/+jQ==}
-    deprecated: This is a stub types definition. history provides its own type definitions, so you do not need this installed.
 
   '@types/hoist-non-react-statics@3.3.7':
     resolution: {integrity: sha512-PQTyIulDkIDro8P+IHbKCsw7U2xxBYflVzW/FgWdCAePD9xGSidgA76/GeJ6lBKoblyhf9pBY763gbrN+1dI8g==}
@@ -3647,10 +3640,6 @@ snapshots:
       '@types/unist': 3.0.3
 
   '@types/history@4.7.11': {}
-
-  '@types/history@5.0.0':
-    dependencies:
-      history: 5.3.0
 
   '@types/hoist-non-react-statics@3.3.7(@types/react@18.3.29)':
     dependencies:
