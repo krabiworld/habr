@@ -209,8 +209,6 @@ export const HABR_LINKS_REPLACE_MAP = [
 export const READER_FONT_FAMILIES = [
   'Google Sans',
   'Roboto',
-  'Segoe UI',
-  'Arial',
   'Comic Sans',
   'Comic Sans MS',
 ]
@@ -285,7 +283,7 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   preferredLightTheme: 'light',
   autoChangeTheme: true,
   readerSettings: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Google Sans',
     fontSize: 16,
     changeLinks: false,
     replaceImagesWithPlaceholder: false,
