@@ -40,7 +40,7 @@
     "redux-thunk": "^2.3.0",
     "tinycolor2": "^1.6.0",
     "typescript": "^5.9.3",
-    "vite": "^5.4.21",
+    "vite": "^6.4.2",
     "vite-plugin-pwa": "^0.21.2",
     "vite-tsconfig-paths": "^4.0.5",
     "workbox-build": "^6.1.1"
