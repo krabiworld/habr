@@ -1,7 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { alpha, Typography, useTheme } from '@material-ui/core'
-import OutsidePage from 'src/components/blocks/OutsidePage'
 import isDarkTheme from 'src/utils/isDarkTheme'
 import { MIN_WIDTH } from 'src/config/constants'
 import LinkToOutsidePage from 'src/components/blocks/LinkToOutsidePage'

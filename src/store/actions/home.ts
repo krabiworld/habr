@@ -54,28 +54,6 @@ export const getPosts =
       }
     }
 
-// TODO: fix types
-//@ts-expect-error temporary fix
-export const getAdverts = () => async (dispatch) => {
-  const type = ADVERTS_PREFIX + 'FETCH'
-
-  dispatch({ type })
-
-  try {
-    const data = await api.getAdverts()
-
-    dispatch({
-      type: type + '_FULFILLED',
-      payload: data.adverts,
-    })
-  } catch (error) {
-    dispatch({
-      type: type + '_REJECTED',
-      payload: { error: (error as Error)?.message },
-    })
-  }
-}
-
 export const getMostReading =
   // TODO: fix types
   //@ts-expect-error temporary fix

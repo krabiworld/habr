@@ -21,7 +21,6 @@ import { useDispatch } from 'react-redux'
 import { getPosts, setPostItemSize } from 'src/store/actions/home'
 import { useSelector } from 'src/hooks'
 import getCachedMode from 'src/utils/getCachedMode'
-import AdvertsBlock from './AdvertsBlock'
 import MainBlock from 'src/components/blocks/MainBlock'
 import Sidebar from 'src/pages/Home/Sidebar'
 import useLastMode from 'src/hooks/useLastMode'
@@ -204,7 +203,6 @@ const Home = () => {
   return (
     <div className={classes.root}>
       <FlowsBar onClick={onFlowsBarLinkClick} flow={flow} />
-      {currentPage === 1 && <AdvertsBlock />}
       {flow !== 'feed' && (
         <Switcher
           flow={flow}
