@@ -123,7 +123,6 @@ const Hubs = () => {
   return fetchError ? (
     <ErrorComponent message={fetchError.error.message} />
   ) : (
-    <OutsidePage headerText={headerText} hidePositionBar disableShrinking>
       <div className={classes.root}>
         <SearchBar inputRef={inputRef} onSubmit={search} />
         <List className={classes.list}>
@@ -155,7 +154,6 @@ const Hubs = () => {
           </div>
         )}
       </div>
-    </OutsidePage>
   )
 }
 

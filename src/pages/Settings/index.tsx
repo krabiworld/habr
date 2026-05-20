@@ -99,29 +99,23 @@ const Settings = () => {
   const theme = useTheme()
 
   return (
-    <OutsidePage
-      headerText={'Настройки'}
-      disableShrinking
-      backgroundColor={theme.palette.background.paper}
-    >
-      <div className={classes.root}>
-        {items.map((e, i) => (
-          <LinkToOutsidePage
-            to={'/settings' + e.to}
-            key={i}
-            className={classes.link}
-          >
-            <e.icon className={classes.linkIcon} width={28} height={28} />
-            <Typography className={classes.linkText}>{e.text}</Typography>
-            <Icon24ChevronRight
-              className={classes.linkIconChevronRight}
-              width={18}
-              height={18}
-            />
-          </LinkToOutsidePage>
-        ))}
-      </div>
-    </OutsidePage>
+    <div className={classes.root}>
+      {items.map((e, i) => (
+        <LinkToOutsidePage
+          to={'/settings' + e.to}
+          key={i}
+          className={classes.link}
+        >
+          <e.icon className={classes.linkIcon} width={28} height={28} />
+          <Typography className={classes.linkText}>{e.text}</Typography>
+          <Icon24ChevronRight
+            className={classes.linkIconChevronRight}
+            width={18}
+            height={18}
+          />
+        </LinkToOutsidePage>
+      ))}
+    </div>
   )
 }
 
