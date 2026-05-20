@@ -91,6 +91,7 @@ const newResponse = (
   )
 }
 
+// noinspection JSUnusedGlobalSymbols
 const cacheHeaderPlugin = [
   {
     cacheWillUpdate: ({ response }: { response: Response }) =>

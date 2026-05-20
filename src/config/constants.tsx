@@ -306,16 +306,6 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   },
 }
 
-export const LANGUAGES_INTERFACE = [
-  {
-    type: 'ru',
-    name: 'Русский',
-  },
-  {
-    type: 'en',
-    name: 'English',
-  },
-]
 export const LANGUAGES_FEED = [
   {
     type: 'ru',

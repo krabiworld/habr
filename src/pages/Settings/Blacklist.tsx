@@ -25,7 +25,6 @@ import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import MainBlock from 'src/components/blocks/MainBlock'
 import Sidebar from 'src/components/blocks/Sidebar'
 import SideBlock from 'src/components/blocks/SideBlock'
-import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   section: {
@@ -64,7 +63,6 @@ const List: React.FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setItems: (items: string[]) => (dispatch: any) => any
 }> = ({ items, setItems }) => {
-  const { t } = useTranslation()
   const [selectedItem, setSelectedItem] = useState<string>()
   const [isAlertDialogOpen, setAlertDialogOpen] = useState(false)
   const handleAlertClose = () => setAlertDialogOpen(false)
@@ -82,16 +80,15 @@ const List: React.FC<{
   return (
     <MUIList>
       <Dialog open={isAlertDialogOpen} onClose={handleAlertClose}>
-        <DialogTitle id="alert-dialog-title">{t`pages.SettingsBlacklist.ListDialogTitle`}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Подтверждение</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {t`pages.SettingsBlacklist.ListDialogContentText`}{' '}
-            <b>&quot;{selectedItem}&quot;</b>?
+            Точно хочешь удалить из списка <b>&quot;{selectedItem}&quot;</b>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAlertClose} color="default">
-            {t`common.cancel`}
+            Отмена
           </Button>
           <Button
             onClick={handleAlertCloseWithDeletion}
@@ -100,7 +97,7 @@ const List: React.FC<{
             disableElevation
             autoFocus
           >
-            {t`common.delete`}
+            Удалить
           </Button>
         </DialogActions>
       </Dialog>
@@ -132,7 +129,6 @@ const AddDialog: React.FC<AddDialogProps> = ({
 }) => {
   const textInputRef = useRef<HTMLInputElement>()
   const handleClose = () => setOpen(false)
-  const { t } = useTranslation()
   const handleSubmit = () => {
     if (textInputRef.current) {
       onSubmit(textInputRef.current.value)
@@ -159,7 +155,7 @@ const AddDialog: React.FC<AddDialogProps> = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="default">
-          {t`common.cancel`}
+          Отмена
         </Button>
         <Button
           color="primary"
@@ -167,7 +163,7 @@ const AddDialog: React.FC<AddDialogProps> = ({
           disableElevation
           onClick={handleSubmit}
         >
-          {t`common.add`}
+          Добавить
         </Button>
       </DialogActions>
     </Dialog>
@@ -177,7 +173,6 @@ const AddDialog: React.FC<AddDialogProps> = ({
 const Blacklist = () => {
   const classes = useStyles()
   const theme = useTheme()
-  const { t } = useTranslation()
   const [isAddAuthorDialogOpen, setAddAuthorDialogOpen] = useState(false)
   const [isAddCompanyDialogOpen, setAddCompanyDialogOpen] = useState(false)
   const hiddenAuthors = useSelector((store) => store.settings.hiddenAuthors)
@@ -215,20 +210,20 @@ const Blacklist = () => {
       variant="body2"
       className={classes.emptyText}
     >
-      {t`pages.SettingsBlacklist.emptyText`}
+      В чёрном списке пока нет элементов.
     </Typography>
   )
 
   return (
     <OutsidePage
-      headerText={t`pages.SettingsBlacklist.pageTitle`}
+      headerText={'Черный список'}
       disableShrinking
       backgroundColor={theme.palette.background.paper}
     >
       <MainBlock>
         <div className={classes.section}>
           <Typography className={classes.sectionHeader}>
-            {t`pages.SettingsBlacklist.hiddenAuthors`}
+            Скрытые авторы
           </Typography>
           <IconButton
             className={classes.addButton}
@@ -243,7 +238,7 @@ const Blacklist = () => {
         </div>
         <div className={classes.section}>
           <Typography className={classes.sectionHeader}>
-            {t`pages.SettingsBlacklist.hiddenCompanies`}
+            Скрытые компании
           </Typography>
           <IconButton
             className={classes.addButton}
@@ -260,21 +255,23 @@ const Blacklist = () => {
           isOpen={isAddAuthorDialogOpen}
           setOpen={setAddAuthorDialogOpen}
           onSubmit={addHiddenAuthor}
-          placeholder={t`pages.SettingsBlacklist.authorDialogPlaceholder`}
-          title={t`pages.SettingsBlacklist.addAuthor`}
+          placeholder={'Например, vasiliy_pupkin'}
+          title={'Добавить автора'}
         />
         <AddDialog
           isOpen={isAddCompanyDialogOpen}
           setOpen={setAddCompanyDialogOpen}
           onSubmit={addHiddenCompany}
-          placeholder={t`pages.SettingsBlacklist.companyDialogPlaceholder`}
-          title={t`pages.SettingsBlacklist.addCompany`}
+          placeholder={'Например, yagoogl'}
+          title={'Добавить компанию'}
         />
       </MainBlock>
       <Sidebar>
-        <SideBlock title={t`pages.SettingsBlacklist.sidebarTitle`}>
+        <SideBlock title={'Информация'}>
           <Typography variant="body2">
-            {t`pages.SettingsBlacklist.sidebarText`}
+            Здесь находятся те авторы и компании, которых ты не любишь. Они
+            пропадут из новостной ленты, а вместо них появится табличка о том,
+            что там был тролль.
           </Typography>
         </SideBlock>
       </Sidebar>

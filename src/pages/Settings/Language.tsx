@@ -3,7 +3,6 @@ import OutsidePage from 'src/components/blocks/OutsidePage'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   LANGUAGES_FEED,
-  LANGUAGES_INTERFACE,
   MIN_WIDTH,
 } from 'src/config/constants'
 import {
@@ -16,7 +15,6 @@ import {
 import { useSelector } from 'src/hooks'
 import { useDispatch } from 'react-redux'
 import { setSettings } from 'src/store/actions/settings'
-import { useTranslation } from 'react-i18next'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 const Language = () => {
   const theme = useTheme()
   const classes = useStyles()
-  const { t, i18n } = useTranslation()
   const languageSettings = useSelector((store) => store.settings.language)
   const dispatch = useDispatch()
   const setLanguageSettings = (field: string, value: unknown) => {
@@ -62,13 +59,6 @@ const Language = () => {
     )
   }
 
-  const handleInterfaceLanguageChange = (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => {
-    setLanguageSettings('interface', value)
-    i18n.changeLanguage(value)
-  }
   const handleFeedLanguageChange = (
     _event: React.ChangeEvent<HTMLInputElement>,
     value: string
@@ -78,35 +68,13 @@ const Language = () => {
 
   return (
     <OutsidePage
-      headerText={t`pages.SettingsLanguage.pageTitle`}
+      headerText={'Настройки языка'}
       disableShrinking
       backgroundColor={theme.palette.background.paper}
     >
       <div className={classes.root}>
         <div className={classes.section}>
-          <Typography
-            className={classes.sectionHeader}
-          >{t`pages.SettingsLanguage.interface`}</Typography>
-          <RadioGroup
-            aria-label="language-interface"
-            name="language-interface"
-            value={languageSettings.interface}
-            onChange={handleInterfaceLanguageChange}
-          >
-            {LANGUAGES_INTERFACE.map(({ name, type }) => (
-              <FormControlLabel
-                value={type}
-                key={type}
-                control={<Radio color="primary" />}
-                label={name}
-              />
-            ))}
-          </RadioGroup>
-        </div>
-        <div className={classes.section}>
-          <Typography
-            className={classes.sectionHeader}
-          >{t`pages.SettingsLanguage.publications`}</Typography>
+          <Typography className={classes.sectionHeader}>Публикации</Typography>
           <RadioGroup
             aria-label="language-feed"
             name="language-feed"
