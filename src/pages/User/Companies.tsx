@@ -13,7 +13,6 @@ import ProfileCompaniesSkeleton from 'src/components/skeletons/ProfileCompanies'
 import { useDispatch } from 'react-redux'
 import { getProfileCompanies } from 'src/store/actions/profile'
 import UserAvatar from 'src/components/blocks/UserAvatar'
-import LinkToOutsidePage from 'src/components/blocks/LinkToOutsidePage'
 
 const useStyles = makeStyles((theme) => ({
   blockTitle: {
@@ -57,8 +56,9 @@ const Companies = ({ classes: additionalClasses }: ComponentWithUserParams) => {
   const Item = ({ data }: { data: Company }) => (
     <ListItem
       style={{ paddingLeft: 0, paddingRight: 0 }}
-      component={LinkToOutsidePage}
-      to={'/company/' + data.alias}
+      component="a"
+      href={`https://habr.com/companies/${data.alias}/profile/`}
+      target="_blank"
     >
       <ListItemAvatar>
         <UserAvatar

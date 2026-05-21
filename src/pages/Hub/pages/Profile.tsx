@@ -208,13 +208,14 @@ const Links = () => {
         </LinkToOutsidePage>
       </ButtonBase>
       <ButtonBase className={classes.button}>
-        <LinkToOutsidePage
+        <a
           className={classes.link}
-          to={'/hub/' + alias + '/companies/p/1'}
+          href={`https://habr.com/hubs/${alias}/companies/`}
+          target="_blank"
         >
           <Icon24WorkOutline />
           <Typography className={classes.text}>Компании</Typography>
-        </LinkToOutsidePage>
+        </a>
       </ButtonBase>
     </div>
   )

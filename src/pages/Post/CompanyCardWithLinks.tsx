@@ -4,7 +4,6 @@ import { MIN_WIDTH } from 'src/config/constants'
 import { Post } from 'src/interfaces'
 import UserAvatar from 'src/components/blocks/UserAvatar'
 import { Link as MUILink } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { useSelector } from 'src/hooks'
 import FormattedText from 'src/components/formatters/FormattedText'
 
@@ -99,7 +98,7 @@ const CompanyCardWithLinks: React.FC<{
   return (
     <div className={classes.root}>
       <div className={classes.flexRow}>
-        <Link to={'/company/' + company?.alias} className={classes.link}>
+        <a href={`https://habr.com/companies/${company?.alias}/profile/`} target="_blank" className={classes.link}>
           <UserAvatar
             className={classes.avatar}
             src={company?.imageUrl}
@@ -115,7 +114,7 @@ const CompanyCardWithLinks: React.FC<{
               </FormattedText>
             )}
           </div>
-        </Link>
+        </a>
       </div>
       <div className={classes.links}>
         {company?.contacts.map((e, i) => (

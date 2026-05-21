@@ -8,11 +8,7 @@ import {
 } from '@vkontakte/icons'
 import { useSelector } from 'src/hooks'
 
-const useStyles = makeStyles(() => ({
-  root: {},
-}))
-
-const useListLinkStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     '-webkit-tap-highlight-color': 'transparent !important',
     padding: theme.spacing(1.25, 2),
@@ -23,28 +19,6 @@ const useListLinkStyles = makeStyles((theme) => ({
   },
 }))
 
-interface ListLinkProps {
-  to: string
-  title: string
-  icon: typeof Icon28ArticleOutline
-}
-
-const ListLinkUnmemoized: React.FC<ListLinkProps> = ({
-  to,
-  title,
-  icon: Icon,
-}) => {
-  const classes = useListLinkStyles()
-
-  return (
-    <ListItem button component={Link} to={to} className={classes.root}>
-      <Icon width={28} height={28} className={classes.icon} />
-      <Typography>{title}</Typography>
-    </ListItem>
-  )
-}
-const ListLink = React.memo(ListLinkUnmemoized)
-
 const Links = () => {
   const classes = useStyles()
   const user = useSelector((store) => store.auth.me.data)
@@ -52,21 +26,18 @@ const Links = () => {
 
   return (
     <List className={classes.root}>
-      <ListLink
-        to={'/user/' + alias + '/articles/p/1'}
-        title={'Статьи'}
-        icon={Icon28ArticleOutline}
-      />
-      <ListLink
-        to={'/user/' + alias + '/comments/p/1'}
-        title={'Комментарии'}
-        icon={Icon28CommentOutline}
-      />
-      <ListLink
-        to={'/user/' + alias + '/favorites/articles/p/1'}
-        title={'Закладки'}
-        icon={Icon20BookmarkOutline}
-      />
+      <ListItem button component={Link} to={'/user/' + alias + '/articles/p/1'} className={classes.root}>
+        <Icon28ArticleOutline width={28} height={28} className={classes.icon} />
+        <Typography>Статьи</Typography>
+      </ListItem>
+      <ListItem button component="a" href={`https://habr.com/users/${alias}/comments/`} target="_blank" className={classes.root}>
+        <Icon28CommentOutline width={28} height={28} className={classes.icon} />
+        <Typography>Комментарии</Typography>
+      </ListItem>
+      <ListItem button component="a" href={`https://habr.com/en/users/${alias}/bookmarks/articles/`} target="_blank" className={classes.root}>
+        <Icon20BookmarkOutline width={28} height={28} className={classes.icon} />
+        <Typography>Закладки</Typography>
+      </ListItem>
     </List>
   )
 }

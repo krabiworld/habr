@@ -156,7 +156,7 @@ const TabGroupUnmemoized: React.FC<TabGroupProps> = ({
     createStyles({
       root: {
         textTransform: 'none',
-        minWidth: desktop ? 122 : 72,
+        minWidth: desktop ? 100 : 72,
         minHeight: desktop ? 40 : 38,
         flexGrow: 1,
         fontSize: 16,
@@ -170,6 +170,8 @@ const TabGroupUnmemoized: React.FC<TabGroupProps> = ({
         '&:hover': {
           opacity: 1,
         },
+        // TODO: fix types
+        //@ts-expect-error temporary fix
         '&$selected': {
           color: theme.palette.text.primary,
           fontWeight: theme.typography.fontWeightMedium,

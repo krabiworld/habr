@@ -26,13 +26,9 @@ import Login from 'src/pages/Login'
 import { Theme } from '@material-ui/core'
 import Home from 'src/pages/Home/index'
 import UserArticles from 'src/pages/User/pages/Articles'
-import UserComments from 'src/pages/User/pages/Comments'
-import UserFavoriteArticles from 'src/pages/User/pages/FavArticles'
-import UserFavoriteComments from 'src/pages/User/pages/FavComments'
 import getContrastPaperColor from 'src/utils/getContrastPaperColor'
 import Hub from 'src/pages/Hub/index'
 import HubAuthors from 'src/pages/Hub/pages/Authors'
-import HubCompanies from 'src/pages/Hub/pages/Companies'
 
 export interface Route {
   path: string | string[]
@@ -194,14 +190,6 @@ export const routes: Route[] = [
     alias: 'hubs',
   },
   {
-    path: '/hub/:alias/companies/p/:page',
-    component: <HubCompanies />,
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'hubCompanies',
-  },
-  {
     path: '/hub/:alias/authors/p/:page',
     component: <HubAuthors />,
     shouldShowAppBar: false,
@@ -228,30 +216,6 @@ export const routes: Route[] = [
     shouldAppBarChangeColors: false,
     appBarColor: (theme) => theme.palette.background.default,
     alias: 'hub',
-  },
-  {
-    path: '/user/:login/favorites/comments/p/:page',
-    component: <UserFavoriteComments />,
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'userFaviritesComments',
-  },
-  {
-    path: '/user/:login/favorites/articles/p/:page',
-    component: <UserFavoriteArticles />,
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'userFaviritesArticles',
-  },
-  {
-    path: '/user/:login/comments/p/:page',
-    component: <UserComments />,
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'userComments',
   },
   {
     path: '/user/:login/articles/p/:page',

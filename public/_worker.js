@@ -33,7 +33,6 @@ export default {
             <meta property="og:description" content="${post.metadata.metaDescription}" />
             <meta property="og:image" content="${post.metadata.shareImageUrl}" />
             <meta property="og:url" content="${url.href}" />
-            <meta name="twitter:card" content="summary_large_image" />
           `;
         }
       }

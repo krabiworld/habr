@@ -4,7 +4,6 @@ import { MIN_WIDTH } from 'src/config/constants'
 import { Post } from 'src/interfaces'
 import UserAvatar from 'src/components/blocks/UserAvatar'
 import { Fade, Typography } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { useSelector } from 'src/hooks'
 import FormattedText from 'src/components/formatters/FormattedText'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -204,13 +203,13 @@ const CompanyCard: React.FC<{
       )}
       <div className={classes.paper}>
         <div className={classes.flexRow}>
-          <Link to={'/company/' + company.alias} className={classes.avatarLink}>
+          <a href={`https://habr.com/companies/${company.alias}/profile/`} target="_blank" className={classes.avatarLink}>
             <UserAvatar
               className={classes.avatar}
               src={company.imageUrl}
               alias={company.alias}
             />
-          </Link>
+          </a>
           <div
             className={classes.flexColumn}
             style={{ marginLeft: 16, marginRight: 16 }}
@@ -221,8 +220,9 @@ const CompanyCard: React.FC<{
             </Typography>
           </div>
         </div>
-        <Link
-          to={'/company/' + company.alias}
+        <a
+          href={`https://habr.com/companies/${company.alias}/profile/`}
+          target="_blank"
           className={classes.companyNameAndDescription}
         >
           <FormattedText className={classes.companyName}>
@@ -233,7 +233,7 @@ const CompanyCard: React.FC<{
               {company.descriptionHtml}
             </FormattedText>
           )}
-        </Link>
+        </a>
       </div>
     </div>
   )

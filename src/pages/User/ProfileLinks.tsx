@@ -50,19 +50,22 @@ const ProfileLinks = () => {
     {
       icon: Icon28ArticleOutline,
       to: location.pathname + '/articles/p/1',
+      external: false,
       text: 'Публикации',
       badgeContent: profile?.counterStats.postCount,
     },
     {
       icon: Icon28CommentOutline,
-      to: location.pathname + '/comments/p/1',
+      to: `https://habr.com/users/${profile?.alias}/comments/`,
+      external: true,
       text: 'Комментарии',
       style: { transform: 'scale(1.1)' },
       badgeContent: profile?.counterStats.commentCount,
     },
     {
       icon: Icon20BookmarkOutline,
-      to: location.pathname + '/favorites/articles/p/1',
+      to: `https://habr.com/en/users/${profile?.alias}/bookmarks/articles/`,
+      external: true,
       text: 'Закладки',
       badgeContent: profile?.counterStats.favoriteCount,
     },
@@ -70,16 +73,20 @@ const ProfileLinks = () => {
 
   return (
     <div className={classes.root}>
-      {buttons.map(({ icon: Icon, text, style, to, badgeContent }, i) => (
+      {buttons.map(({ icon: Icon, text, style, to, external, badgeContent }, i) => (
         <Button
           key={i}
           classes={{ root: classes.button, label: classes.buttonLabel }}
-          onClick={() =>
-            history.push(to, {
-              from: location.pathname,
-              scroll: window.pageYOffset,
-            })
-          }
+          onClick={() => {
+            if (external) {
+              window.open(to, '_blank')
+            } else {
+              history.push(to, {
+                from: location.pathname,
+                scroll: window.pageYOffset,
+              })
+            }
+          }}
         >
           <Badge
             classes={{ badge: classes.badge }}
