@@ -16,8 +16,14 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "rootDir": "./src",
-    "baseUrl": ".",
-    "types": ["vite/client"]
+    "baseUrl": "./",
+    "types": ["vite/client"],
+    "paths": {
+      "react": ["./node_modules/preact/compat/"],
+      "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"],
+      "react-dom": ["./node_modules/preact/compat/"],
+      "react-dom/*": ["./node_modules/preact/compat/*"]
+    }
   },
   "exclude": ["node_modules", "dist"],
   "include": ["src", "src/service-worker.ts"],

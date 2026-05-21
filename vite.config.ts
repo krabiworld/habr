@@ -1,12 +1,12 @@
-import react from '@vitejs/plugin-react'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import preact from "@preact/preset-vite"
 
 export default defineConfig(() => {
   return {
     plugins: [
-      react(),
+      preact(),
       VitePWA({
         srcDir: 'src',
         filename: 'service-worker.ts',
