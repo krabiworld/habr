@@ -14,6 +14,7 @@ export default defineConfig(() => {
         manifest: false,
         workbox: {
           maximumFileSizeToCacheInBytes: 1024 * 1024 * 3,
+          globIgnores: ['_worker.js'],
         },
       }),
     ],
