@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -15,7 +15,6 @@ import {
 } from 'src/config/constants'
 import { Icon28SettingsOutline, Icon24UserOutline } from '@vkontakte/icons'
 import WifiOffRoundedIcon from '@material-ui/icons/WifiOffRounded'
-import { Offline } from 'react-detect-offline'
 import { useRoute, useSelector } from 'src/hooks'
 import { FetchingState } from 'src/interfaces'
 import {
@@ -116,6 +115,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+function useOnlineStatus() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  return isOnline;
+}
+
 const AppBarComponent = () => {
   const trigger = useAppBarScrollTrigger()
   const history = useHistory()
@@ -143,6 +161,7 @@ const AppBarComponent = () => {
   const shouldShowLoadingSpinner =
     csrfTokenState === FetchingState.Fetched &&
     userState !== FetchingState.Fetched
+  const isOnline = useOnlineStatus();
 
   const goHome = () => {
     window.scrollTo(0, 0)
@@ -182,9 +201,9 @@ const AppBarComponent = () => {
               >
                 habr
               </Typography>
-              <Offline>
+              {!isOnline && (
                 <WifiOffRoundedIcon className={classes.offline} />
-              </Offline>
+              )}
             </div>
             <IconButton onClick={goSettings}>
               <Icon28SettingsOutline width={24} height={24} />

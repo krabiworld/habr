@@ -53,9 +53,6 @@ importers:
       react-colorful:
         specifier: ^5.1.2
         version: 5.7.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
-      react-detect-offline:
-        specifier: ^2.4.3
-        version: 2.4.5
       react-iframe:
         specifier: ^1.8.0
         version: 1.8.5(react@17.0.2)
@@ -108,9 +105,6 @@ importers:
       '@types/react-color':
         specifier: ^3.0.13
         version: 3.0.13(@types/react@19.2.15)
-      '@types/react-detect-offline':
-        specifier: ^2.4.6
-        version: 2.4.6
       '@types/react-lazy-load-image-component':
         specifier: ^1.6.5
         version: 1.6.5
@@ -1187,9 +1181,6 @@ packages:
     peerDependencies:
       '@types/react': '*'
 
-  '@types/react-detect-offline@2.4.6':
-    resolution: {integrity: sha512-hwWQf1VxT7xE4Uhkwf6ddRrmEXBU0NOQuMSKyS9eD8Iy6wgrfVBpN0NkRhBM3CgdLXoWtE39EqkRtSBTOIWoKg==}
-
   '@types/react-lazy-load-image-component@1.6.5':
     resolution: {integrity: sha512-Pyhy/H3oFqHqiCfH/97y4YAc4du04qs54g+9oC08nbRSr2dq3wIqVOY/3VyKxWU1/f42BgjRgMAJ8TyB2mK92A==}
 
@@ -2131,9 +2122,6 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-
-  react-detect-offline@2.4.5:
-    resolution: {integrity: sha512-sI13NPEKl3uQp95FT5CwrYzH3DnXCwNP6TnY6NRF5gFDM4NU9KDlbtA6HG2dwhDVS0RYQGXwZW/mHbdf8fCnaw==}
 
   react-dom@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
@@ -3754,10 +3742,6 @@ snapshots:
       '@types/react': 19.2.15
       '@types/reactcss': 1.2.13(@types/react@19.2.15)
 
-  '@types/react-detect-offline@2.4.6':
-    dependencies:
-      '@types/react': 19.2.15
-
   '@types/react-lazy-load-image-component@1.6.5':
     dependencies:
       '@types/react': 19.2.15
@@ -4802,8 +4786,6 @@ snapshots:
     dependencies:
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
-
-  react-detect-offline@2.4.5: {}
 
   react-dom@17.0.2(react@17.0.2):
     dependencies:
