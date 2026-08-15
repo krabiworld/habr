@@ -27,16 +27,6 @@ export const get = (): UserSettings => {
       // TODO: fix types
       //@ts-expect-error temporary fix
       res[key] = DEFAULT_USER_SETTINGS[key]
-    } else if (key === 'themeType') {
-      const { themeType, customThemes = [] } = res
-      const isThemeInDefaultThemes = THEMES.find((e) => e === themeType)
-      const isThemeInCustomThemes = customThemes.find(
-        (e) => e.type === themeType
-      )
-
-      if (!isThemeInDefaultThemes && !isThemeInCustomThemes) {
-        res.themeType = DEFAULT_USER_SETTINGS.themeType
-      }
     }
   }
 

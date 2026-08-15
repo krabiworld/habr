@@ -41,10 +41,8 @@ export const makeType = (t: PaletteType): MUIPaletteType => THEME_TYPES[t]
 
 const generateTheme = (themeType?: PaletteType): ThemeOptions => {
   const localStorageUserSettings = userSettings.get()
-  const localStorageCustomThemes = localStorageUserSettings.customThemes
   const localStorageThemeType = localStorageUserSettings.themeType
   const type = (localStorageThemeType || 'light') as MUIPaletteType
-  const customTheme = localStorageCustomThemes.find((e) => e.type === type)
   const defaultPalette = {
     type: makeType(themeType || type),
     primary: makePrimaryColors(themeType || type),
@@ -53,7 +51,7 @@ const generateTheme = (themeType?: PaletteType): ThemeOptions => {
   }
 
   return {
-    palette: customTheme ? customTheme.palette : defaultPalette,
+    palette: defaultPalette,
     shape: { borderRadius: 4 },
     overrides: {
       MuiTab: {

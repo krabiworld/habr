@@ -8,7 +8,6 @@ import Post from 'src/pages/Post'
 import Settings from 'src/pages/Settings/index'
 import SettingsAppearance from 'src/pages/Settings/Appearance'
 import SettingsBlacklist from 'src/pages/Settings/Blacklist'
-import SettingsNewTheme from 'src/pages/Settings/NewTheme'
 import SettingsInterface from 'src/pages/Settings/Interface'
 import SettingsReader from 'src/pages/Settings/Reader'
 import SettingsImport from 'src/pages/Settings/ImportSettings'
@@ -106,24 +105,6 @@ export const routes: Route[] = [
     shouldAppBarChangeColors: false,
     appBarColor: (theme) => getContrastPaperColor(theme),
     alias: 'settingsLanguage',
-  },
-  {
-    path: '/settings/appearance/new-theme',
-    component: <SettingsNewTheme />,
-    title: 'Новая тема',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => getContrastPaperColor(theme),
-    alias: 'settingsNewTheme',
-  },
-  {
-    path: '/settings/appearance/edit-theme/:themeType',
-    component: <SettingsNewTheme isEditMode />,
-    title: 'Изменение темы',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => getContrastPaperColor(theme),
-    alias: 'settingsEditTheme',
   },
   {
     path: '/settings/appearance',

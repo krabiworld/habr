@@ -25,7 +25,6 @@ export interface CustomTheme {
 
 export default interface UserSettings {
   themeType: PaletteType | string
-  customThemes: CustomTheme[]
   hiddenAuthors: string[]
   hiddenCompanies: string[]
   autoChangeTheme: boolean

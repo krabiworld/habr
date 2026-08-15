@@ -255,9 +255,6 @@ export const makeNavigationTabs = (
         'settings',
         'settingsAppearance',
         'settingsInterface',
-        'settingsPrivacy',
-        'settingsNewTheme',
-        'settingsEditTheme',
         'settingsBlacklist',
         'settingsReader',
         'settingsLanguage',
@@ -274,7 +271,6 @@ export const chromeAddressBarHeight = 56
 
 export const DEFAULT_USER_SETTINGS: UserSettings = {
   themeType: 'light',
-  customThemes: [],
   hiddenAuthors: [],
   hiddenCompanies: [],
   preferredDarkTheme: 'dark',

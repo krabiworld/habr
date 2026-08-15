@@ -29,7 +29,6 @@ import {
   ListItemText,
   Switch,
   alpha,
-  Divider,
   Button,
   Dialog,
   DialogActions,
@@ -38,13 +37,9 @@ import {
   FormControlLabel,
   RadioGroup,
 } from '@material-ui/core'
-import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded'
-import getInvertedContrastPaperColor from 'src/utils/getInvertedContrastPaperColor'
 import isMobile from 'is-mobile'
 import isDarkTheme from 'src/utils/isDarkTheme'
-import { useHistory } from 'react-router'
 import { CustomTheme } from 'src/interfaces/UserSettings'
-import { EditRounded } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -146,46 +141,6 @@ const useStyles = makeStyles((theme) => ({
           : darken(theme.palette.background.paper, 0.2),
       },
     },
-  },
-  newThemeButton: {
-    marginRight: theme.spacing(2),
-    display: 'inline-flex',
-    marginLeft: theme.spacing(2),
-    justifyContent: 'center',
-    height: 128,
-    width: 96,
-    borderRadius: 12,
-    alignItems: 'center',
-    flexDirection: 'column',
-    background: getInvertedContrastPaperColor(theme),
-    boxShadow: '0 0 0 1px ' + theme.palette.divider,
-  },
-  newThemeButtonText: {
-    fontSize: 14,
-    marginTop: theme.spacing(0.5),
-  },
-  dividerHolder: {
-    display: 'inline-flex',
-    flexDirection: 'column',
-    marginLeft: theme.spacing(2),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  divider: {
-    position: 'absolute',
-    height: 96,
-  },
-  editThemeButton: {
-    width: '100%',
-    justifyContent: 'start',
-    padding: theme.spacing(1.5, 2),
-  },
-  editThemeIcon: {
-    marginRight: theme.spacing(2),
-  },
-  editThemeText: {
-    fontWeight: 500,
-    fontFamily: 'Google Sans',
   },
 }))
 
@@ -566,10 +521,7 @@ const ThemeSelectDialog = (props: ThemeSelectDialogProps) => {
   const { onClose, value: valueProp, open, ...other } = props
   const [value, setValue] = React.useState(valueProp)
   const radioGroupRef = React.useRef<HTMLElement>(null)
-  const customThemes = useSelector((store) => store.settings.customThemes)
-  const options = THEMES.map((e) => makeCustomThemeFromThemeType(e)).concat(
-    customThemes
-  )
+  const options = THEMES.map((e) => makeCustomThemeFromThemeType(e))
 
   useEffect(() => {
     if (!open) {
@@ -632,10 +584,8 @@ const ThemeSelectDialog = (props: ThemeSelectDialogProps) => {
 
 const Appearance = () => {
   const classes = useStyles()
-  const history = useHistory()
   const theme = useTheme()
   const dispatch = useDispatch()
-  const customThemes = useSelector((store) => store.settings.customThemes)
   const autoChangeTheme = useSelector((store) => store.settings.autoChangeTheme)
   const preferredLightTheme = useSelector(
     (store) => store.settings.preferredLightTheme
@@ -643,26 +593,16 @@ const Appearance = () => {
   const preferredDarkTheme = useSelector(
     (store) => store.settings.preferredDarkTheme
   )
-  const themeType = useSelector((state) => state.settings.themeType)
-  const isCustomThemeChosen = customThemes.some((e) => e.type === themeType)
   const preferredLightThemeName = useMemo(() => {
-    if (preferredLightTheme in THEME_NAMES) {
-      // TODO: fix types
-      //@ts-expect-error temporary fix
-      return THEME_NAMES[preferredLightTheme]
-    } else {
-      return customThemes.find((e) => e.type === preferredLightTheme)?.name
-    }
-  }, [customThemes, preferredLightTheme])
+    // TODO: fix types
+    //@ts-expect-error temporary fix
+    return THEME_NAMES[preferredLightTheme]
+  }, [preferredLightTheme])
   const preferredDarkThemeName = useMemo(() => {
-    if (preferredDarkTheme in THEME_NAMES) {
-      // TODO: fix types
-      //@ts-expect-error temporary fix
-      return THEME_NAMES[preferredDarkTheme]
-    } else {
-      return customThemes.find((e) => e.type === preferredDarkTheme)?.name
-    }
-  }, [customThemes, preferredDarkTheme])
+    // TODO: fix types
+    //@ts-expect-error temporary fix
+    return THEME_NAMES[preferredDarkTheme]
+  }, [preferredDarkTheme])
   const [isPreferredLightThemeDialogOpen, setPreferredLightThemeDialogOpen] =
     useState(false)
   const [isPreferredDarkThemeDialogOpen, setPreferredDarkThemeDialogOpen] =
@@ -699,10 +639,7 @@ const Appearance = () => {
           <SingleRowGrid />
           <OneByTwoGrid />
         </Grid>
-        <div
-          className={classes.section}
-          {...(isCustomThemeChosen && { style: { paddingBottom: 0 } })}
-        >
+        <div className={classes.section}>
           <Typography className={classes.sectionHeader}>Темы</Typography>
           <FormControl
             component="fieldset"
@@ -713,43 +650,7 @@ const Appearance = () => {
             {THEMES.map((e, i) => (
               <ThemeCard theme={makeCustomThemeFromThemeType(e)} key={i} />
             ))}
-            <div className={classes.dividerHolder}>
-              <Divider className={classes.divider} orientation="vertical" />
-            </div>
-            {customThemes.map((e, i) => (
-              <ThemeCard theme={e} key={i} />
-            ))}
-            <div style={{ display: 'inline-flex' }}>
-              <ButtonBase
-                className={classes.newThemeButton}
-                onClick={() =>
-                  history.push('/settings/appearance/new-theme', {
-                    from: history.location.pathname,
-                  })
-                }
-              >
-                <AddCircleRoundedIcon />
-                <Typography className={classes.newThemeButtonText}>
-                  Создать
-                </Typography>
-              </ButtonBase>
-            </div>
           </FormControl>
-          {isCustomThemeChosen && (
-            <ButtonBase
-              className={classes.editThemeButton}
-              onClick={() =>
-                history.push('/settings/appearance/edit-theme/' + themeType, {
-                  from: history.location.pathname,
-                })
-              }
-            >
-              <EditRounded className={classes.editThemeIcon} />
-              <Typography className={classes.editThemeText}>
-                Изменить тему
-              </Typography>
-            </ButtonBase>
-          )}
         </div>
         <div className={classes.section}>
           <Typography
