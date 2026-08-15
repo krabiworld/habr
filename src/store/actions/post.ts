@@ -84,7 +84,6 @@ export const getPost =
   //@ts-expect-error temporary fix
   (id: number | string) => async (dispatch, getState: () => RootState) => {
     const storeData = getState().post.post
-    const authorizedRequestData = getState().auth.authorizedRequestData
     if (
       storeData.state === FetchingState.Fetched &&
       storeData.data?.id.toString() === id.toString()
@@ -95,7 +94,7 @@ export const getPost =
     dispatch({ type: POST_FETCH })
 
     try {
-      const data = await api.getPost(id, authorizedRequestData)
+      const data = await api.getPost(id)
 
       if (
         (data as APIError).data &&
@@ -186,7 +185,6 @@ export const getPostComments =
     async (dispatch, getState: () => RootState) => {
       const state = getState()
       const storeData = state.post
-      const authData = state.auth.authorizedRequestData
       if (
         storeData.comments.state === FetchingState.Fetched &&
       storeData.post.data?.id.toString() === id.toString()
@@ -197,7 +195,7 @@ export const getPostComments =
       dispatch({ type: COMMENTS_FETCH })
 
       try {
-        const data = await api.getComments(id, authData)
+        const data = await api.getComments(id)
         const parsedComments = parseComments(data.comments, options)
         const flattenComments = flatten(parsedComments)
         const commentsWithLevelInfo = setLevelInfo(flattenComments)
@@ -240,7 +238,6 @@ export const getCompany =
   (alias: string) => async (dispatch, getState: () => RootState) => {
     const storeState = getState()
     const storeData = storeState.post
-    const authData = storeState.auth.authorizedRequestData
     if (
       storeData.company.state === FetchingState.Fetched &&
       alias === storeData.company.data?.alias
@@ -251,7 +248,7 @@ export const getCompany =
     dispatch({ type: COMPANY_FETCH })
 
     try {
-      const data = await apiGetCompany(alias, authData)
+      const data = await apiGetCompany(alias)
       dispatch({
         type: COMPANY_FETCH_FULFILLED,
         payload: data,

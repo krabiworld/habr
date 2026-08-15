@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
-  Avatar,
   ButtonBase,
   Divider,
   Drawer,
@@ -18,15 +17,8 @@ import {
 import TabObject from 'src/interfaces/NavigationTabObject'
 import { useRoute, useSelector } from 'src/hooks'
 import { useHistory, useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
-import { Skeleton } from '@material-ui/lab'
-import {
-  Icon24DoorArrowLeftOutline,
-} from '@vkontakte/icons'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Route } from 'src/config/routes'
-import { FetchingState } from 'src/interfaces'
-import UserMenu from './UserMenu'
 
 const NAVIGATION_TABS = makeNavigationTabs(28, 28, true)
 const avatarWidth = 32
@@ -234,63 +226,6 @@ const NavButton: React.FC<NavButtonProps> = ({ label, icon, to, current }) => {
   )
 }
 
-const ProfileButton: React.FC = () => {
-  const classes = useProfileButtonStyles()
-  const [isUserMenuOpen, setUserMenuOpen] = useState(false)
-  const userState = useSelector((state) => state.auth.me.state)
-  const userData = useSelector((state) => state.auth.me.data)
-  const csrfTokenState = useSelector((state) => state.auth.csrfToken.state)
-  const shouldShowUser =
-    userState === FetchingState.Fetched &&
-    csrfTokenState === FetchingState.Fetched
-  const shouldShowLoadingSpinner =
-    csrfTokenState === FetchingState.Fetched &&
-    userState !== FetchingState.Fetched
-  const openUserMenu = () => setUserMenuOpen(true)
-
-  if (shouldShowLoadingSpinner) {
-    return (
-      <div className={classes.root}>
-        <div>
-          <Skeleton variant="circle" className={classes.avatar} />
-        </div>
-        <div className={classes.textHolder}>
-          <Skeleton width="75%"></Skeleton>
-        </div>
-      </div>
-    )
-  }
-
-  return shouldShowUser ? (
-    <>
-      <ButtonBase className={classes.root} onClick={openUserMenu}>
-        <Avatar className={classes.avatar} src={userData?.avatarUrl} />
-        <div className={classes.textHolder}>
-          <Typography className={classes.fullname}>
-            {userData?.fullname}
-          </Typography>
-        </div>
-      </ButtonBase>
-      <UserMenu
-        isOpen={isUserMenuOpen}
-        setOpen={setUserMenuOpen}
-        variant="modal"
-      />
-    </>
-  ) : (
-    <Link className={classes.root} to={'/auth'}>
-      <Icon24DoorArrowLeftOutline
-        className={classes.avatar}
-        width={avatarWidth}
-        height={avatarHeight}
-      />
-      <div className={classes.textHolder}>
-        <Typography className={classes.fullname}>Войти</Typography>
-      </div>
-    </Link>
-  )
-}
-
 const SideNavigationDrawer = () => {
   const theme = useTheme()
   const route = useRoute()
@@ -331,7 +266,6 @@ const SideNavigationDrawer = () => {
           </Typography>
           <Divider className={classes.logoDivider} />
         </div>
-        <ProfileButton />
         <div className={classes.tabsHolder}>
           {NAVIGATION_TABS.map((e, i) => (
             <NavButton current={isCurrent(e, route)} key={i} {...e} />

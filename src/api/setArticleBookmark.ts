@@ -1,14 +1,11 @@
 import makeRequest from './makeRequest'
-import { AuthorizedRequestParams } from '../interfaces'
 
 export default async ({
   mode = 'add',
   id,
-  authData,
 }: {
   mode: 'add' | 'remove'
   id: string | number
-  authData?: AuthorizedRequestParams
 }) =>
   await makeRequest<{
     ok: boolean
@@ -16,7 +13,6 @@ export default async ({
   }>({
     path: `articles/${id}/bookmarks/${mode}`,
     version: 1,
-    authData,
     requestOptions: {
       method: 'POST',
     },

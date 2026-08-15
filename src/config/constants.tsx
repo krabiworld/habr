@@ -41,8 +41,6 @@ export const THREAD_LEVEL = 7
 /** Local Storage keys */
 export const USER_SETTINGS_KEY = 'habra_USER_SETTINGS'
 export const NEEDS_UPDATE_KEY = 'habra_NEEDS_UPDATE'
-export const AUTH_DATA_KEY = 'habra_AUTH_DATA'
-export const CSRF_TOKEN_KEY = 'habra_CSRF_TOKEN'
 
 export const FLOWS: FlowObject[] = [
   {
@@ -281,7 +279,7 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   hiddenCompanies: [],
   preferredDarkTheme: 'dark',
   preferredLightTheme: 'light',
-  autoChangeTheme: true,
+  autoChangeTheme: false,
   readerSettings: {
     fontFamily: 'Google Sans',
     fontSize: 16,

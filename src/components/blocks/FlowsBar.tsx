@@ -82,7 +82,6 @@ const FlowsBar: React.FC<{
   onClick: (e: FlowObject) => void
 }> = ({ flow, onClick }) => {
   const classes = useStyles()
-  const isLoggedIn = useSelector((store) => !!store.auth.authorizedRequestData)
   const FlowItem: React.FC<{ data: FlowObject }> = ({ data }) => (
     <a
       className={[classes.link]
@@ -98,14 +97,6 @@ const FlowsBar: React.FC<{
     <AppBar className={classes.root} elevation={0}>
       <Toolbar className={classes.toolbar}>
         <div className={classes.content}>
-          {isLoggedIn && (
-            <FlowItem
-              data={{
-                title: 'Моя лента',
-                alias: 'feed',
-              }}
-            />
-          )}
           {FLOWS.filter((e) => e.alias !== 'feed').map((e, i) => (
             <FlowItem key={i} data={e} />
           ))}

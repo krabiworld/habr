@@ -5,7 +5,6 @@ import { shouldUpdate } from 'src/utils/cache'
 import { RootState } from '..'
 import {
   HOME_PREFIX,
-  ADVERTS_PREFIX,
   SIDEBAR_MOST_READING,
   SIDEBAR_TOP_COMPANIES,
   SET_HOME_POST_ITEM_SIZE,
@@ -26,7 +25,6 @@ export const getPosts =
       const type = HOME_PREFIX + 'FETCH'
       // Get data from root store to find out if we're going to fetch a data or not
       const storeState = getState()
-      const authData = storeState.auth.authorizedRequestData
       const storeData =
       flow === 'all'
         ? storeState.home.data[mode].pages[page]
@@ -39,7 +37,7 @@ export const getPosts =
       dispatch({ type, payload: { mode, flow } })
 
       try {
-        const data = await api.getPosts({ mode, page, flow, authData })
+        const data = await api.getPosts({ mode, page, flow })
         const pagesCount = data?.pagesCount
 
         dispatch({
@@ -57,14 +55,13 @@ export const getPosts =
 export const getMostReading =
   // TODO: fix types
   //@ts-expect-error temporary fix
-  () => async (dispatch, getState: () => RootState) => {
+  () => async (dispatch) => {
     const type = SIDEBAR_MOST_READING + 'FETCH'
-    const authData = getState().auth.authorizedRequestData
 
     dispatch({ type })
 
     try {
-      const data = await api.getMostReadingArticles(authData)
+      const data = await api.getMostReadingArticles()
 
       dispatch({
         type: type + '_FULFILLED',

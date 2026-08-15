@@ -1,14 +1,13 @@
 import makeRequest from './makeRequest'
-import { AuthorizedRequestParams, FlowAlias, Posts } from '../interfaces'
+import { FlowAlias, Posts } from '../interfaces'
 
 export default async ({
   page,
   flow = 'all',
-  authData,
 }: {
   page: number
   flow: FlowAlias
-  authData?: AuthorizedRequestParams
+
 }) => {
   let params: Record<string, string> = {
     news: 'true',
@@ -28,6 +27,5 @@ export default async ({
       ...params,
     },
     version: 2,
-    authData,
   })
 }

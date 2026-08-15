@@ -13,7 +13,6 @@ export const getNews =
 
       // Get data from root store to find out if we're going to fetch a data or not
       const storeState = getState()
-      const authData = storeState.auth.authorizedRequestData
       const storeData =
       flow === 'all'
         ? // TODO: fix types
@@ -27,7 +26,7 @@ export const getNews =
       dispatch({ type, payload: { page, flow } })
 
       try {
-        const data = await api.getNews({ page, flow, authData })
+        const data = await api.getNews({ page, flow })
         const pagesCount = data?.pagesCount
 
         dispatch({
@@ -50,7 +49,6 @@ export const getNewsPromo =
     // Get data from root store to find out if we're going to fetch a data or not
     const storeState = getState()
     const storeData = storeState.news.block
-    const authData = storeState.auth.authorizedRequestData
     // TODO: fix types
     //@ts-expect-error temporary fix
     if (!hubAlias && !shouldUpdate(storeData)) {
@@ -60,7 +58,7 @@ export const getNewsPromo =
     dispatch({ type })
 
     try {
-      const data = await api.getNewsPromo({ hubAlias, authData })
+      const data = await api.getNewsPromo({ hubAlias })
       dispatch({ type: type + '_FULFILLED', payload: { data } })
     } catch (error) {
       dispatch({ type: type + '_REJECTED', error: (error as Error)?.message })

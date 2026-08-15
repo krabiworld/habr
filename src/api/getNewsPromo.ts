@@ -1,12 +1,10 @@
 import makeRequest from './makeRequest'
-import { AuthorizedRequestParams, Posts } from '../interfaces'
+import { Posts } from '../interfaces'
 
 export default async ({
   hubAlias,
-  authData,
 }: {
   hubAlias?: string
-  authData?: AuthorizedRequestParams
 }) =>
   await makeRequest<Posts>({
     path: 'news/context',
@@ -17,5 +15,4 @@ export default async ({
       page_num: '1',
       context_hub_alias: hubAlias || '',
     },
-    authData,
   })

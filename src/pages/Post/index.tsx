@@ -240,9 +240,6 @@ const Post = () => {
   )
   const post = useSelector((store) => store.post.post.data)
   const fetchError = useSelector((store) => store.post.post.fetchError)
-  const authorizedRequestData = useSelector(
-    (store) => store.auth.authorizedRequestData
-  )
   const { id: strigifiedId, alias: companyAlias } = useParams<Params>()
   const id = Number(strigifiedId)
   const classes = useStyles()
@@ -274,16 +271,6 @@ const Post = () => {
   useEffect(() => {
     dispatch(getPost(id))
     companyAlias && dispatch(getCompany(companyAlias))
-
-    if (authorizedRequestData) {
-      try {
-        postSendPageview(id, authorizedRequestData).then((data) =>
-          console.log('Got response from pageview:', data)
-        )
-      } catch (e) {
-        console.error('Cannot send pageview in Post:', e)
-      }
-    }
     // TODO: investigate deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, companyAlias])

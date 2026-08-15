@@ -156,9 +156,6 @@ const SearchResultsScreen: React.FC<{ q: string }> = ({ q }) => {
   const [fetchError, setError] = useState<string | null>()
   const [currentPage, setCurrentPage] = useState<number>(Number(params.page))
   const [pagesCount, setPagesCount] = useState<number>()
-  const authorizedRequestData = useSelector(
-    (store) => store.auth.authorizedRequestData
-  )
 
   const handleChange = (_e: React.ChangeEvent<unknown>, i: number) => {
     if (i === currentPage) return
@@ -179,7 +176,6 @@ const SearchResultsScreen: React.FC<{ q: string }> = ({ q }) => {
           query: q,
           page: currentPage,
           order: 'relevance',
-          authData: authorizedRequestData || undefined,
         })
         for (const id in d.publicationRefs) {
           // TODO: fix types

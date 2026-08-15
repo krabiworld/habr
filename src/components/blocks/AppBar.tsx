@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import Avatar from '@material-ui/core/Avatar'
 import { useHistory, useLocation } from 'react-router-dom'
 import {
   APP_BAR_HEIGHT,
@@ -13,19 +12,16 @@ import {
   MIDDLE_WIDTH,
   RATING_MODES,
 } from 'src/config/constants'
-import { Icon28SettingsOutline, Icon24UserOutline } from '@vkontakte/icons'
+import { Icon28SettingsOutline } from '@vkontakte/icons'
 import WifiOffRoundedIcon from '@material-ui/icons/WifiOffRounded'
 import { useRoute, useSelector } from 'src/hooks'
-import { FetchingState } from 'src/interfaces'
 import {
-  CircularProgress,
   alpha,
   Theme,
   useMediaQuery,
   useTheme,
 } from '@material-ui/core'
 import useAppBarScrollTrigger from 'src/hooks/useAppBarScrollTrigger'
-import UserMenu from './UserMenu'
 
 interface StyleProps {
   isTransformed: boolean
@@ -143,24 +139,13 @@ const AppBarComponent = () => {
   const appBarColor = route?.appBarColor
   const isHidden = !route?.shouldShowAppBar
   const theme = useTheme()
-  const appHasDrawer = useMediaQuery(theme.breakpoints.up(MIDDLE_WIDTH))
-  const [isUserMenuOpen, setUserMenuOpen] = React.useState(false)
   const classes = useStyles({
     isTransformed: trigger,
     appBarColor,
     shouldChangeColors,
   })
   const modeName = useSelector((state) => state.home.mode)
-  const userState = useSelector((state) => state.auth.me.state)
-  const userData = useSelector((state) => state.auth.me.data)
-  const csrfTokenState = useSelector((state) => state.auth.csrfToken.state)
   const mode = RATING_MODES.find((e) => e.mode === modeName)
-  const shouldShowUser =
-    userState === FetchingState.Fetched &&
-    csrfTokenState === FetchingState.Fetched
-  const shouldShowLoadingSpinner =
-    csrfTokenState === FetchingState.Fetched &&
-    userState !== FetchingState.Fetched
   const isOnline = useOnlineStatus();
 
   const goHome = () => {
@@ -174,16 +159,6 @@ const AppBarComponent = () => {
       from: location.pathname + location.search,
       scroll: window.pageYOffset,
     })
-  const goAuth = () =>
-    history.push('/auth', {
-      from: location.pathname + location.search,
-      scroll: window.pageYOffset,
-    })
-  const openUserMenu = () => setUserMenuOpen(true)
-
-  useEffect(() => {
-    if (appHasDrawer && isUserMenuOpen) setUserMenuOpen(false)
-  }, [shouldChangeColors, isHidden, route, appHasDrawer, isUserMenuOpen])
 
   // Do not render the AppBar if it is hidden by the route
   if (isHidden) return null
@@ -208,32 +183,9 @@ const AppBarComponent = () => {
             <IconButton onClick={goSettings}>
               <Icon28SettingsOutline width={24} height={24} />
             </IconButton>
-            {shouldShowLoadingSpinner && (
-              <IconButton style={{ width: 48, height: 48 }}>
-                <CircularProgress
-                  style={{ width: 16, height: 16 }}
-                  color="primary"
-                />
-              </IconButton>
-            )}
-            {!shouldShowUser && !shouldShowLoadingSpinner && (
-              <IconButton onClick={goAuth}>
-                <Icon24UserOutline width={24} height={24} />
-              </IconButton>
-            )}
-            {shouldShowUser && (
-              <IconButton onClick={openUserMenu}>
-                <Avatar className={classes.avatar} src={userData?.avatarUrl} />
-              </IconButton>
-            )}
           </div>
         </Toolbar>
       </AppBar>
-      <UserMenu
-        variant="dialog"
-        isOpen={isUserMenuOpen}
-        setOpen={setUserMenuOpen}
-      />
     </>
   )
 }

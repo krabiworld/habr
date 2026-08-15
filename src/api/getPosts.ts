@@ -1,5 +1,5 @@
 import makeRequest from './makeRequest'
-import { AuthorizedRequestParams, FlowAlias, Posts } from '../interfaces'
+import { FlowAlias, Posts } from '../interfaces'
 import { Mode } from 'src/config/constants'
 
 export const modeParams = {
@@ -22,7 +22,6 @@ interface Params {
   hubAlias?: string
   token?: string
   flow?: FlowAlias
-  authData?: AuthorizedRequestParams
 }
 
 export default async ({
@@ -30,7 +29,6 @@ export default async ({
   page,
   hubAlias,
   flow = 'all',
-  authData,
 }: Params) =>
   await makeRequest<Posts>({
     path: 'articles',
@@ -43,5 +41,4 @@ export default async ({
       flow: flow === 'all' || flow === 'feed' ? '' : flow,
       custom: flow === 'feed' ? 'true' : '',
     },
-    authData,
   })

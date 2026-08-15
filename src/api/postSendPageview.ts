@@ -1,11 +1,10 @@
 import makeRequest from './makeRequest'
-import { AuthorizedRequestParams, Post } from '../interfaces'
+import { Post } from '../interfaces'
 
-export default async (id: number | string, authData: AuthorizedRequestParams) =>
+export default async (id: number | string) =>
   await makeRequest<Post>({
     path: `articles/${id}/pageview`,
     version: 1,
-    authData,
     requestOptions: {
       method: 'POST',
       data: {},

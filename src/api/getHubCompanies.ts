@@ -1,14 +1,12 @@
 import makeRequest from './makeRequest'
-import { AuthorizedRequestParams, HubCompanies } from '../interfaces'
+import { HubCompanies } from '../interfaces'
 
 export default async ({
   alias,
   page,
-  authData,
 }: {
   alias: string
   page: number
-  authData?: AuthorizedRequestParams
 }) =>
   await makeRequest<HubCompanies>({
     path: 'hubs/' + alias + '/companies',
@@ -21,5 +19,4 @@ export default async ({
       hubAlias: alias,
     },
     version: 2,
-    authData,
   })

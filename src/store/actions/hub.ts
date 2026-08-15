@@ -22,12 +22,11 @@ export const getHub =
       getState: () => RootState
     ) => {
       const type = GET_PROFILE + '_FETCH'
-      const authData = getState().auth.authorizedRequestData
 
       dispatch({ type })
 
       try {
-        const data = await getHubProfile(alias, authData)
+        const data = await getHubProfile(alias)
 
         dispatch({
           type: type + '_FULFILLED',
@@ -50,12 +49,11 @@ export const getHubPosts =
   //@ts-expect-error temporary fix
     async (dispatch, getState: () => RootState) => {
       const type = GET_POSTS + '_FETCH'
-      const authData = getState().auth.authorizedRequestData
 
       dispatch({ type })
 
       try {
-        const data = await getHubPostsRequest({ mode, page, alias, authData })
+        const data = await getHubPostsRequest({ mode, page, alias })
 
         dispatch({
           type: type + '_FULFILLED',

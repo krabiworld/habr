@@ -27,7 +27,6 @@ import useTitleChange from 'src/hooks/useTitleChange'
 import isDarkTheme from 'src/utils/isDarkTheme'
 import useAutoChangeTheme from 'src/hooks/useAutoChangeTheme'
 import SideNavigationDrawer from './blocks/SideNavigationDrawer'
-import useUserDataFetch from 'src/hooks/useUserDataFetch'
 import UpdateNotification from 'src/components/blocks/UpdateNotification'
 import useGetDownvoteReasons from 'src/hooks/useGetDownvoteReasons'
 import { useEffect } from 'react'
@@ -153,7 +152,6 @@ const App: React.FC = () => {
 
   useTitleChange()
   useAutoChangeTheme()
-  useUserDataFetch()
   useGetDownvoteReasons()
 
   // Set root classes

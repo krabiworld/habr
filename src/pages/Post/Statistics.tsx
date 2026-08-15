@@ -39,9 +39,6 @@ import { Link } from 'react-router-dom'
 import getPostLink from 'src/utils/getPostLink'
 import getFavoritesCount from 'src/utils/getFavoritesCount'
 import { useSelector } from 'src/hooks'
-import setArticleBookmark from 'src/api/setArticleBookmark'
-import setArticleVote from 'src/api/setArticleVote'
-import APIError from 'src/interfaces/APIError'
 import getScoreTotal from 'src/utils/getScoreTotal'
 
 const getScoreColor = (score: number, theme: Theme) => {
@@ -382,11 +379,7 @@ const ScoreCard: React.FC<{
   })
   const theme = useTheme()
   const classes = useStyles()
-  const authorizedRequestData = useSelector(
-    (store) => store.auth.authorizedRequestData
-  )
-  const shouldDisableButtons =
-    !authorizedRequestData || isFetchingScoreResponse || !voteState.canVote
+  const shouldDisableButtons = isFetchingScoreResponse || !voteState.canVote
   const disableUpButton = voteState.vote.value === -1
   const disableDownButton = voteState.vote.value === 1
 
@@ -510,10 +503,6 @@ const Statistics = ({ post }: { post: Post }) => {
     useState(false)
   const [currentDownvoteReason, setCurrentDownvoteReason] =
     useState<string>('1')
-  const authData = useSelector((store) => store.auth.authData.data)
-  const authorizedRequestData = useSelector(
-    (store) => store.auth.authorizedRequestData
-  )
   const [isBookmarked, setBookmarkState] = useState(
     post?.relatedData?.bookmarked || false
   )
@@ -543,8 +532,7 @@ const Statistics = ({ post }: { post: Post }) => {
   const comments = formatNumber(Number(commentsCount))
   const favorites = getFavoritesCount({ post, isBookmarked })
   const postLink = getPostLink(post)
-  const shouldDisableScoreButtons =
-    !authorizedRequestData || isFetchingScoreResponse || !voteState.canVote
+  const shouldDisableScoreButtons = isFetchingScoreResponse || !voteState.canVote
   const isScoreUpButtonDisabled = voteState.vote.value === -1
   const isScoreDownButtonDisabled = voteState.vote.value === 1
   const downvoteReasonsFetchState = useSelector(
@@ -572,69 +560,18 @@ const Statistics = ({ post }: { post: Post }) => {
 
   const handleFavoriteClick = async () => {
     if (isFetchingBookmarkResponse) return
-    if (authData) {
-      setIsFetchingBookmarkResponse(true)
-      const response = await setArticleBookmark({
-        mode: isBookmarked ? 'remove' : 'add',
-        authData: authorizedRequestData || undefined,
-        id: post.id,
-      })
-      if (response.ok) {
-        setBookmarkState((prev) => !prev)
-      } else {
-        enqueueSnackbar('Произошла ошибка', {
-          variant: 'error',
-          autoHideDuration: 4000,
-        })
-        console.error('Error in handleFavoriteClick:', response)
-      }
-      setIsFetchingBookmarkResponse(false)
-    } else {
-      enqueueSnackbar('Нужна авторизация', {
-        variant: 'error',
-        autoHideDuration: 4000,
-      })
-    }
+    enqueueSnackbar('Нужна авторизация', {
+      variant: 'error',
+      autoHideDuration: 4000,
+    })
   }
 
   const handleScoreClick = async (mode: 'up' | 'down', reason?: string) => {
     if (isFetchingScoreResponse) return
-    if (authData) {
-      setIsFetchingScoreResponse(true)
-      const response = await setArticleVote({
-        mode,
-        authData: authorizedRequestData || undefined,
-        id: post.id,
-        reason,
-      })
-      if (response?.score) {
-        setVoteState({
-          vote: response.vote,
-          canVote: response.canVote,
-          voteByDefault: false,
-        })
-      } else if (
-        (response as unknown as APIError)?.additional[0] ===
-        'POST_VOTE_DUPLICATE'
-      ) {
-        enqueueSnackbar('Повторное голосование запрещено', {
-          variant: 'error',
-          autoHideDuration: 4000,
-        })
-      } else {
-        enqueueSnackbar('Произошла ошибка', {
-          variant: 'error',
-          autoHideDuration: 4000,
-        })
-        console.error('Error in handleScoreClick:', response)
-      }
-      setIsFetchingScoreResponse(false)
-    } else {
-      enqueueSnackbar('Нужна авторизация', {
-        variant: 'error',
-        autoHideDuration: 4000,
-      })
-    }
+    enqueueSnackbar('Нужна авторизация', {
+      variant: 'error',
+      autoHideDuration: 4000,
+    })
   }
 
   const handleDownvoteReasonChange = (

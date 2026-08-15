@@ -22,7 +22,6 @@ import getCachedMode from 'src/utils/getCachedMode'
 import Hubs from 'src/pages/Hubs/index'
 import User from 'src/pages/User/index'
 import { Redirect } from 'react-router'
-import Login from 'src/pages/Login'
 import { Theme } from '@material-ui/core'
 import Home from 'src/pages/Home/index'
 import UserArticles from 'src/pages/User/pages/Articles'
@@ -41,15 +40,6 @@ export interface Route {
 }
 
 export const routes: Route[] = [
-  {
-    path: '/auth',
-    component: <Login />,
-    title: 'Авторизация',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'auth',
-  },
   {
     path: '/post/:id/comments/thread/:threadId',
     component: <Thread />,

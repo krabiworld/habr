@@ -334,10 +334,6 @@ export const PostItem = ({
   const companyAlias = isCorporative
     ? post?.hubs?.find((e) => e.type === 'corporative')?.alias
     : null
-  const authData = useSelector((store) => store.auth.authData.data)
-  const authorizedRequestData = useSelector(
-    (store) => store.auth.authorizedRequestData
-  )
   const rootRef = React.useRef<HTMLDivElement>()
   const placeholderStyles = React.useMemo(
     () => ({ height: getPostItemSize(post?.id) }),
@@ -376,23 +372,10 @@ export const PostItem = ({
       text: <>{favorites}</>,
       isActive: isBookmarked,
       action: async () => {
-        if (authData) {
-          setIsFetchingBookmarkResponse(true)
-          const response = await setArticleBookmark({
-            mode: isBookmarked ? 'remove' : 'add',
-            authData: authorizedRequestData || undefined,
-            id: post?.id || 0,
-          })
-          if (response.ok) {
-            setBookmarkState((prev) => !prev)
-            setIsFetchingBookmarkResponse(false)
-          }
-        } else {
-          enqueueSnackbar('Нужна авторизация', {
-            variant: 'error',
-            autoHideDuration: 4000,
-          })
-        }
+        enqueueSnackbar('Нужна авторизация', {
+          variant: 'error',
+          autoHideDuration: 4000,
+        })
       },
     },
     {
