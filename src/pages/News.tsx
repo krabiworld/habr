@@ -10,10 +10,9 @@ import ErrorComponent from '../components/blocks/Error'
 import { useDispatch } from 'react-redux'
 import { getNews } from 'src/store/actions/news'
 import { useSelector } from 'src/hooks'
-import { APP_BAR_HEIGHT, FLOWS, MIN_WIDTH } from 'src/config/constants'
-import FlowsBar from 'src/components/blocks/FlowsBar'
+import { FLOWS, MIN_WIDTH } from 'src/config/constants'
 import FlowAlias from 'src/interfaces/FlowAlias'
-import { FlowObject, Posts } from 'src/interfaces'
+import { Posts } from 'src/interfaces'
 import useQuery from 'src/hooks/useQuery'
 import NotFound from './NotFound'
 import MainBlock from 'src/components/blocks/MainBlock'
@@ -24,16 +23,14 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.default,
     padding: 0,
     width: '100%',
-    marginTop: APP_BAR_HEIGHT,
     [theme.breakpoints.up(MIN_WIDTH)]: {
       paddingTop: theme.spacing(1.5),
     },
   },
   sidebar: {
-    marginTop: APP_BAR_HEIGHT + theme.spacing(1.5),
+    marginTop: theme.spacing(1.5),
     display: 'flex',
     alignItems: 'flex-start',
-    height: '100%',
   },
 }))
 
@@ -84,14 +81,6 @@ const News = () => {
     else history.push('/news/p/' + i)
   }
 
-  const onFlowsBarLinkClick = (e: FlowObject) => {
-    if (e.alias === 'all') {
-      history.push('/news/p/1')
-    } else {
-      history.push('/news/p/1?flow=' + e.alias)
-    }
-  }
-
   useEffect(() => {
     dispatch(getNews(currentPage, flow))
     // TODO: fix deps
@@ -106,7 +95,6 @@ const News = () => {
   return (
     <>
       <MainBlock>
-        <FlowsBar onClick={onFlowsBarLinkClick} flow={flow} />
         <List className={classes.root}>
           {isFetching &&
             [...new Array(7)].map((_, i) => <PostSkeleton key={i} />)}

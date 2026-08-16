@@ -20,8 +20,6 @@ import {
   POST_ITEM_VISIBILITY_THRESHOLD,
   POST_LABELS,
 } from 'src/config/constants'
-import { useSelector } from 'src/hooks'
-import RightIcon from '@material-ui/icons/ChevronRightRounded'
 import { Button, Chip, alpha, Theme } from '@material-ui/core'
 import getPostLink from 'src/utils/getPostLink'
 import VisibilitySensor from 'react-visibility-sensor'
@@ -279,7 +277,6 @@ export const PostItem = ({
   const reads = formatNumber(statistics?.readingCount || 0)
   const favorites = formatNumber(statistics?.favoritesCount || 0)
   const comments = formatNumber(Number(statistics?.commentsCount))
-  const isCorporative = post?.isCorporative
   const rootRef = React.useRef<HTMLDivElement>()
   const placeholderStyles = React.useMemo(
     () => ({ height: getPostItemSize(post?.id) }),
