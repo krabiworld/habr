@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import SideBlock from 'src/components/blocks/SideBlock'
 import Sidebar from 'src/components/blocks/Sidebar'
-import { getMostReading, getTopCompanies } from 'src/store/actions/home'
+import { getMostReading } from 'src/store/actions/home'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'src/hooks'
 import { FetchingState, Post } from 'src/interfaces'
@@ -204,7 +204,6 @@ const HomeSidebar = () => {
 
   useEffect(() => {
     dispatch(getMostReading())
-    dispatch(getTopCompanies())
 
     if (mostReadingState === FetchingState.Error) {
       console.error(

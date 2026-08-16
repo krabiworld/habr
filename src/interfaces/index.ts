@@ -1,5 +1,4 @@
 export type { default as UserSettings } from './UserSettings'
-export type { default as APIResponse } from './APIResponse'
 export type { default as Badge } from './Badge'
 export * from './Comments'
 export type { default as Post } from './Post'

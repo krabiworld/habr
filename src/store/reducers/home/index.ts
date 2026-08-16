@@ -1,6 +1,5 @@
 import {
   HOME_PREFIX,
-  SIDEBAR_TOP_COMPANIES,
   SIDEBAR_MOST_READING,
   SET_HOME_POST_ITEM_SIZE,
 } from './types'
@@ -112,27 +111,6 @@ export default (
       state.sidebar.mostReading.data = null
       state.sidebar.mostReading.fetchError = payload
       state.sidebar.mostReading.state = FetchingState.Error
-      return { ...state }
-    }
-
-    case SIDEBAR_TOP_COMPANIES + 'FETCH': {
-      state.sidebar.topCompanies.data = null
-      state.sidebar.topCompanies.fetchError = null
-      state.sidebar.topCompanies.state = FetchingState.Fetching
-      return { ...state }
-    }
-
-    case SIDEBAR_TOP_COMPANIES + 'FETCH_FULFILLED': {
-      state.sidebar.topCompanies.data = payload
-      state.sidebar.topCompanies.fetchError = null
-      state.sidebar.topCompanies.state = FetchingState.Fetched
-      return { ...state }
-    }
-
-    case SIDEBAR_TOP_COMPANIES + 'FETCH_REJECTED': {
-      state.sidebar.topCompanies.data = null
-      state.sidebar.topCompanies.fetchError = payload
-      state.sidebar.topCompanies.state = FetchingState.Error
       return { ...state }
     }
 

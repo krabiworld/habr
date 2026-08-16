@@ -5,7 +5,6 @@ import { RootState } from '..'
 import {
   HOME_PREFIX,
   SIDEBAR_MOST_READING,
-  SIDEBAR_TOP_COMPANIES,
   SET_HOME_POST_ITEM_SIZE,
 } from '../reducers/home/types'
 
@@ -68,28 +67,6 @@ export const getMostReading =
       })
     }
   }
-
-// TODO: fix types
-//@ts-expect-error temporary fix
-export const getTopCompanies = () => async (dispatch) => {
-  const type = SIDEBAR_TOP_COMPANIES + 'FETCH'
-
-  dispatch({ type })
-
-  try {
-    const data = await api.getCompanies({})
-
-    dispatch({
-      type: type + '_FULFILLED',
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: type + '_REJECTED',
-      payload: { error: (error as Error)?.message },
-    })
-  }
-}
 
 export const setPostItemSize =
   (id: number | string, size: number) =>
