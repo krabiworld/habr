@@ -2,16 +2,13 @@ import { ModeObject, FlowObject, UserSettings } from '../interfaces'
 import {
   darken,
   alpha,
-  lighten,
   PaletteType as MUIPaletteType,
 } from '@material-ui/core'
-import { blue } from '@material-ui/core/colors'
+import { pink, blue } from '@material-ui/core/colors'
 import {
   Icon28Newsfeed,
   Icon28SettingsOutline,
   Icon20HomeOutline,
-  Icon28ServicesOutline,
-  Icon24Search,
 } from '@vkontakte/icons'
 import TabObject from 'src/interfaces/NavigationTabObject'
 import getCachedMode from 'src/utils/getCachedMode'
@@ -152,9 +149,9 @@ export const POST_LABELS: Record<string, { text: string }> = {
   translation: { text: 'Перевод' },
   sandbox: { text: 'Из песочницы' },
   recovery: { text: 'Recovery' },
-  technotext2020: { text: '🔥 Технотекст 2020' },
-  technotext2021: { text: '🔥 Технотекст 2021' },
-  technotext2022: { text: '✏️ Технотекст 2022' },
+  technotext2020: { text: 'Технотекст 2020' },
+  technotext2021: { text: 'Технотекст 2021' },
+  technotext2022: { text: 'Технотекст 2022' },
 }
 
 export const HABR_BASE_REGEXP = /(habr|m\.habr)\.com\/(ru|en)\/(.+)/
@@ -214,7 +211,6 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   autoChangeTheme: false,
   language: {
     feed: 'ru',
-    interface: 'ru',
   },
 }
 
@@ -258,23 +254,23 @@ export const BACKGROUND_COLORS_PAPER = {
 
 export const THEME_PRIMARY_COLORS = {
   light: {
-    main: blue.A400,
-    light: blue.A200,
+    main: pink[500],
+    light: pink[500],
     dark: blue.A700,
   },
   dark: {
-    main: blue.A100,
-    light: lighten(blue.A100, 0.05),
+    main: pink[500],
+    light: pink[500],
     dark: darken(blue.A100, 0.1),
   },
   oled: {
-    main: blue.A100,
-    light: lighten(blue.A100, 0.05),
+    main: pink[500],
+    light: pink[500],
     dark: darken(blue.A100, 0.1),
   },
   dimmed: {
-    main: blue.A100,
-    light: lighten(blue.A100, 0.05),
+    main: pink[500],
+    light: pink[500],
     dark: darken(blue.A100, 0.1),
   },
 }

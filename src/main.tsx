@@ -11,11 +11,8 @@ import updateLocalePlugin from 'dayjs/plugin/updateLocale'
 import 'dayjs/locale/ru'
 import { BrowserRouter as Router } from 'react-router-dom'
 import 'react-photoswipe/dist/photoswipe.css'
-import * as userSettingsUtils from 'src/utils/userSettings'
 
-const userSettings = userSettingsUtils.get()
-
-dayjs.locale(userSettings.language.interface || 'ru')
+dayjs.locale('ru')
 dayjs.extend(relativeTimePlugin)
 dayjs.extend(calendarPlugin)
 dayjs.extend(updateLocalePlugin)

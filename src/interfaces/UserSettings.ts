@@ -30,6 +30,5 @@ export default interface UserSettings {
   preferredDarkTheme: PaletteType | string
   language: {
     feed: 'ru' | 'en' | 'ru,en'
-    interface: 'ru' | 'en'
   }
 }
