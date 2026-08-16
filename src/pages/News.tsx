@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1.5),
     display: 'flex',
     alignItems: 'flex-start',
+    height: '100%',
   },
 }))
 
@@ -111,7 +112,7 @@ const News = () => {
         </List>
       </MainBlock>
       <div className={classes.sidebar}>
-        <Sidebar />
+        <Sidebar withoutFlows={true} />
       </div>
     </>
   )

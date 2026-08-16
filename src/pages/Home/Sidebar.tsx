@@ -190,7 +190,7 @@ const MostReadingSideBlockSkeleton = () => {
   )
 }
 
-const HomeSidebar = () => {
+const HomeSidebar = ({ withoutFlows = false }: { withoutFlows?: boolean }) => {
   const dispatch = useDispatch()
   const mostReadingState = useSelector(
     (store) => store.home.sidebar.mostReading.state
@@ -217,7 +217,7 @@ const HomeSidebar = () => {
   }, [])
 
   return (
-    <Sidebar>
+    <Sidebar withoutFlows={withoutFlows}>
       {mostReadingState !== FetchingState.Error && (
         <SideBlock title={'Читают сейчас'}>
           {mostReadingState !== FetchingState.Fetched && (

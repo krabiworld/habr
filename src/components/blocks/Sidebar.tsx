@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const Sidebar: React.FC<React.PropsWithChildren> = ({ children }) => {
+const Sidebar = ({ withoutFlows, children }: { withoutFlows: boolean, children: React.ReactNode }) => {
   const classes = useStyles()
   const theme = useTheme()
   // future: https://material-ui.com/components/use-media-query/#server-side-rendering
@@ -35,7 +35,7 @@ const Sidebar: React.FC<React.PropsWithChildren> = ({ children }) => {
   return shouldShowSidebar ? (
     <StickyBox
       className={classes.root}
-      offsetTop={theme.spacing(1.5) + APP_BAR_HEIGHT}
+      offsetTop={theme.spacing(1.5) + (withoutFlows ? 0 : APP_BAR_HEIGHT)}
       offsetBottom={
         theme.spacing(2) + (disableBottomOffset ? 0 : BOTTOM_BAR_HEIGHT)
       }
