@@ -1,4 +1,3 @@
-import React from 'react'
 import { Typography } from '@material-ui/core'
 import FormattedText from 'src/components/formatters/FormattedText'
 import { ComponentWithUserParams } from './index'

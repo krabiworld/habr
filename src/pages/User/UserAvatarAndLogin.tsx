@@ -1,4 +1,3 @@
-import React from 'react'
 import { Typography } from '@material-ui/core'
 import UserAvatar from 'src/components/blocks/UserAvatar'
 import { Link } from 'react-router-dom'

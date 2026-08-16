@@ -4,7 +4,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import { MIN_WIDTH, POST_IMAGE_HEIGHT } from 'src/config/constants'
-import { useSelector } from 'src/hooks'
 import { useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Typography, Chip, Grid } from '@material-ui/core'
 import { ComponentWithUserParams } from './index'
 import { makeStyles } from '@material-ui/core/styles'

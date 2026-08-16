@@ -21,8 +21,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Route } from 'src/config/routes'
 
 const NAVIGATION_TABS = makeNavigationTabs(28, 28)
-const avatarWidth = 32
-const avatarHeight = 32
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -111,83 +109,6 @@ const useNavButtonStyles = makeStyles((theme) => ({
     fontSize: 16,
     fontWeight: 500,
     fontFamily: 'Google Sans',
-  },
-}))
-
-const useProfileButtonStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    marginBottom: 0,
-    display: 'flex',
-    flexDirection: 'row',
-    padding: theme.spacing(1, 1.2),
-    textDecoration: 'none !important',
-    background: alpha(theme.palette.text.primary, 0.075),
-    borderRadius: 8,
-    transitionDuration: '100ms',
-    transitionTimingFunction: theme.transitions.easing.easeIn,
-    alignItems: 'center',
-    '&:hover': {
-      background: alpha(theme.palette.text.primary, 0.1),
-    },
-  },
-  avatar: {
-    width: avatarWidth,
-    height: avatarHeight,
-    color: theme.palette.primary.main,
-  },
-  textHolder: {
-    marginLeft: theme.spacing(1.5),
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    overflow: 'hidden',
-  },
-  fullname: {
-    fontFamily: 'Google Sans',
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: theme.palette.text.primary,
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '100%',
-    textAlign: 'start',
-  },
-}))
-makeStyles((theme) => ({
-  rootWrapper: {
-    margin: theme.spacing(0, 2),
-  },
-  root: {
-    padding: theme.spacing(0.8, 1),
-    borderRadius: 8,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'initial',
-    flexDirection: 'column',
-    textAlign: 'left',
-    background: (s) => theme.palette.background[s ? 'paper' : 'default'],
-    marginTop: theme.spacing(1),
-  },
-  text: {
-    fontSize: 16,
-    marginLeft: theme.spacing(1),
-    fontWeight: 500,
-    fontFamily: 'Google Sans',
-    flexGrow: 1,
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    color: theme.palette.text.secondary,
-  },
-  headerIcon: {
-    marginRight: -8,
-    width: 24,
-    height: 24,
   },
 }))
 

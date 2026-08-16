@@ -10,7 +10,6 @@ import {
 } from 'src/config/constants'
 import getSecondaryAppBarColor from 'src/utils/getSecondaryAppBarColor'
 import { FlowAlias, FlowObject } from 'src/interfaces'
-import { useSelector } from 'src/hooks'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -7,7 +7,6 @@ import {
   Fade,
   makeStyles,
   Portal,
-  Typography,
 } from '@material-ui/core'
 import { PhotoSwipe } from 'react-photoswipe'
 import { POST_ITEM_VISIBILITY_THRESHOLD } from 'src/config/constants'
@@ -49,72 +48,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '40% !important',
   },
 }))
-
-const useImagePlaceholderStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    background: theme.palette.action.hover,
-    borderRadius: 4,
-    maxWidth: '100%',
-    width: '100%',
-  },
-  title: {
-    fontFamily: 'Google Sans',
-    fontSize: 16,
-    fontWeight: 500,
-    color: theme.palette.text.primary + ' !important',
-  },
-  text: {
-    fontFamily: 'Roboto',
-    fontSize: '14px !important',
-    fontWeight: 'normal',
-    color: theme.palette.text.secondary,
-    textDecoration: 'underline',
-    marginTop: theme.spacing(1) + 'px !important',
-  },
-  button: {
-    padding: theme.spacing(1.5, 2),
-    width: '100%',
-    cursor: 'pointer',
-    border: 'none',
-    background: 'transparent',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '&:hover > p': {
-      color: theme.palette.primary.main,
-    },
-  },
-}))
-
-const ImagePlaceholderUnmemoized: React.FC<{
-  style?: Record<string, string | number>
-  showMediaElementText?: boolean
-  setShouldShowImage: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ style, showMediaElementText, setShouldShowImage }) => {
-  const classes = useImagePlaceholderStyles()
-  const handleClick = () => setShouldShowImage(true)
-
-  return (
-    <div
-      className={classes.root}
-      style={{ aspectRatio: `auto ${style?.width} / ${style?.height}` }}
-    >
-      <button onClick={handleClick} className={classes.button}>
-        <Typography className={classes.title}>
-          {showMediaElementText
-            ? 'Здесь был медиаэлемент'
-            : 'Здесь была картинка'}
-        </Typography>
-        <Typography className={classes.text}>
-          Нажмите здесь, чтобы показать элемент
-        </Typography>
-      </button>
-    </div>
-  )
-}
-const ImagePlaceholder = React.memo(ImagePlaceholderUnmemoized)
 
 interface LazyLoadImageProps {
   src: string

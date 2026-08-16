@@ -34,7 +34,7 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite",
     "build": "vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "lint:types": "pnpm tsc --noemit"

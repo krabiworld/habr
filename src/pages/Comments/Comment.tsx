@@ -20,11 +20,8 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import BookmarkIcon from '@material-ui/icons/Bookmark'
 import GreenRedNumber from 'src/components/formatters/GreenRedNumber'
 import { LazyLoadComponent } from 'react-lazy-load-image-component'
-import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded'
 import { Icon16Up, Icon16Down } from '@vkontakte/icons'
 import { useSelector } from 'src/hooks'
-import { useDispatch } from 'react-redux'
-import { setPostCommentSize } from 'src/store/actions/post'
 import Pencil from 'src/components/svg/Pencil'
 
 const useStyles = makeStyles((theme) => ({
@@ -269,7 +266,6 @@ const Comment: React.FC<{
   const commentPadding = data.level * MARGIN_LEVEL
   const commentOpacity = data.score < 0 ? getOpacity(data.score) : 1
   const shouldAddBottomPadding = isLastInFilteredRootThread
-  const dispatch = useDispatch()
 
   isRootComment && rootClasses.push(classes.firstInThread)
   isLastInThread && rootClasses.push(classes.lastInThread)

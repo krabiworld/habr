@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import {
-  FLOWS,
   MIN_WIDTH,
   Mode,
   RATING_MODES as modes,
@@ -22,7 +21,6 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import SwitcherButtons from './SwitcherButtons'
 import BottomDrawerMargin from 'src/components/blocks/BottomDrawerMargin'
 import isDarkTheme from 'src/utils/isDarkTheme'
-import FlowAlias from 'src/interfaces/FlowAlias'
 
 interface StyledTabProps {
   label: string
@@ -209,11 +207,10 @@ const switcherButtonsDataTop = modes.filter(
   (e) => e.switcherText && !e.isNewMode
 )
 const Switcher: React.FC<{
-  flow?: FlowAlias
   mode: Mode
   setMode: React.Dispatch<React.SetStateAction<Mode>>
   handleClick: ({ mode, to }: { mode: Mode; to: string }) => void
-}> = ({ flow, handleClick, mode, setMode }) => {
+}> = ({ handleClick, mode, setMode }) => {
   const [isOpen, setOpen] = useState(false)
   const current = modes.find((e) => e.mode === mode)
   const [showMode, setShowMode] = useState<ShowMode>(
@@ -222,7 +219,6 @@ const Switcher: React.FC<{
   const [currentMode, setCurrentMode] = useState<ModeObject | undefined>(
     current
   )
-  const currentFlow = flow ? FLOWS.find((e) => e.alias === flow) : null
   const classes = useStyles()
 
   const onButtonClick = () => {

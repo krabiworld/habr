@@ -121,7 +121,7 @@ registerRoute(
 )
 
 registerRoute(
-  /^https?:\/\/habra\.jarvis394\.ml\/.*/,
+  /^https?:\/\/habr\.floof\.fans\/.*/,
   new NetworkFirst({
     networkTimeoutSeconds: 10,
     cacheName: 'api-cache-habr',

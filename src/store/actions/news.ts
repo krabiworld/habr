@@ -40,27 +40,3 @@ export const getNews =
         })
       }
     }
-
-export const getNewsPromo =
-  // TODO: fix types
-  //@ts-expect-error temporary fix
-  (hubAlias?: string) => async (dispatch, getState: () => RootState) => {
-    const type = NEWS_PREFIX + 'PROMO_FETCH'
-    // Get data from root store to find out if we're going to fetch a data or not
-    const storeState = getState()
-    const storeData = storeState.news.block
-    // TODO: fix types
-    //@ts-expect-error temporary fix
-    if (!hubAlias && !shouldUpdate(storeData)) {
-      return Promise.resolve()
-    }
-
-    dispatch({ type })
-
-    try {
-      const data = await api.getNewsPromo({ hubAlias })
-      dispatch({ type: type + '_FULFILLED', payload: { data } })
-    } catch (error) {
-      dispatch({ type: type + '_REJECTED', error: (error as Error)?.message })
-    }
-  }

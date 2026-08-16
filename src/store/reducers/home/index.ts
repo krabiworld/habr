@@ -1,12 +1,11 @@
 import {
   HOME_PREFIX,
-  ADVERTS_PREFIX,
   SIDEBAR_TOP_COMPANIES,
   SIDEBAR_MOST_READING,
   SET_HOME_POST_ITEM_SIZE,
 } from './types'
 import { FLOWS, Mode, RATING_MODES } from 'src/config/constants'
-import { Advert, FetchingState, FlowAlias, Posts } from 'src/interfaces'
+import { FetchingState, FlowAlias, Posts } from 'src/interfaces'
 import getCachedMode from 'src/utils/getCachedMode'
 import getPostFirstImage from 'src/utils/getPostFirstImage'
 
@@ -56,7 +55,7 @@ const initialState = {
     fetching: false,
     fetched: false,
     error: null,
-    data: null as unknown as Advert[],
+    data: null as unknown,
   },
   sidebar: {
     mostReading: {
@@ -147,28 +146,6 @@ export default (
       // TODO: fix types
       //@ts-expect-error temporary fix
       state.sizesMap[payload.id] = payload.size
-      return { ...state }
-    }
-
-    case ADVERTS_PREFIX + 'FETCH': {
-      state.adverts.fetched = false
-      state.adverts.fetching = true
-      state.adverts.error = null
-      return { ...state }
-    }
-
-    case ADVERTS_PREFIX + 'FETCH_FULFILLED': {
-      state.adverts.data = payload
-      state.adverts.fetched = true
-      state.adverts.fetching = false
-      state.adverts.error = null
-      return { ...state }
-    }
-
-    case ADVERTS_PREFIX + 'FETCH_REJECTED': {
-      state.adverts.error = payload
-      state.adverts.fetched = false
-      state.adverts.fetching = false
       return { ...state }
     }
 
