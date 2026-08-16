@@ -4,7 +4,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
 import { useHistory, useLocation } from 'react-router-dom'
 import {
   APP_BAR_HEIGHT,
@@ -12,15 +11,9 @@ import {
   MIDDLE_WIDTH,
   RATING_MODES,
 } from 'src/config/constants'
-import { Icon28SettingsOutline } from '@vkontakte/icons'
 import WifiOffRoundedIcon from '@material-ui/icons/WifiOffRounded'
 import { useRoute, useSelector } from 'src/hooks'
-import {
-  alpha,
-  Theme,
-  useMediaQuery,
-  useTheme,
-} from '@material-ui/core'
+import { alpha, Theme } from '@material-ui/core'
 import useAppBarScrollTrigger from 'src/hooks/useAppBarScrollTrigger'
 
 interface StyleProps {
@@ -66,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: MAX_WIDTH,
     width: '100%',
     flexDirection: 'column',
+    justifyContent: 'center',
   },
   headerTitle: {
     position: 'relative',
@@ -138,7 +132,6 @@ const AppBarComponent = () => {
   const shouldChangeColors = route?.shouldAppBarChangeColors
   const appBarColor = route?.appBarColor
   const isHidden = !route?.shouldShowAppBar
-  const theme = useTheme()
   const classes = useStyles({
     isTransformed: trigger,
     appBarColor,
@@ -154,11 +147,6 @@ const AppBarComponent = () => {
       history.push(mode ? `${mode.to}p/1` : '/')
     }
   }
-  const goSettings = () =>
-    history.push('/settings', {
-      from: location.pathname + location.search,
-      scroll: window.pageYOffset,
-    })
 
   // Do not render the AppBar if it is hidden by the route
   if (isHidden) return null
@@ -180,9 +168,6 @@ const AppBarComponent = () => {
                 <WifiOffRoundedIcon className={classes.offline} />
               )}
             </div>
-            <IconButton onClick={goSettings}>
-              <Icon28SettingsOutline width={24} height={24} />
-            </IconButton>
           </div>
         </Toolbar>
       </AppBar>

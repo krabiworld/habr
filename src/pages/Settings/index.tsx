@@ -4,10 +4,8 @@ import { alpha, Typography } from '@material-ui/core'
 import isDarkTheme from 'src/utils/isDarkTheme'
 import { MIN_WIDTH } from 'src/config/constants'
 import LinkToOutsidePage from 'src/components/blocks/LinkToOutsidePage'
-
 import {
   Icon24PaletteOutline,
-  Icon24HideOutline,
   Icon24ChevronRight,
   Icon28GlobeOutline,
 } from '@vkontakte/icons'
@@ -17,11 +15,6 @@ const items = [
     icon: Icon24PaletteOutline,
     to: '/appearance',
     text: 'Внешний вид',
-  },
-  {
-    icon: Icon24HideOutline,
-    to: '/blacklist',
-    text: 'Чёрный список',
   },
   {
     icon: Icon28GlobeOutline,

@@ -20,7 +20,7 @@ import { useHistory, useLocation } from 'react-router'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Route } from 'src/config/routes'
 
-const NAVIGATION_TABS = makeNavigationTabs(28, 28, true)
+const NAVIGATION_TABS = makeNavigationTabs(28, 28)
 const avatarWidth = 32
 const avatarHeight = 32
 

@@ -8,7 +8,6 @@ import Post from 'src/pages/Post'
 import Settings from 'src/pages/Settings/index'
 import SettingsAppearance from 'src/pages/Settings/Appearance'
 import SettingsLanguage from 'src/pages/Settings/Language'
-import Search from 'src/pages/Search'
 import News from 'src/pages/News'
 import NotFound from 'src/pages/NotFound'
 import CommentsPage from 'src/pages/Comments'
@@ -89,15 +88,6 @@ export const routes: Route[] = [
     shouldAppBarChangeColors: false,
     appBarColor: (theme) => getContrastPaperColor(theme),
     alias: 'settings',
-  },
-  {
-    path: ['/search', '/search/p/:page'],
-    component: <Search />,
-    title: 'Поиск',
-    shouldShowAppBar: true,
-    shouldAppBarChangeColors: true,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'search',
   },
   {
     path: '/user/:login/articles/p/:page',

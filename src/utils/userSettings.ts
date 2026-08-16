@@ -1,7 +1,6 @@
 import { UserSettings } from '../interfaces'
 import {
   DEFAULT_USER_SETTINGS,
-  THEMES,
   USER_SETTINGS_KEY,
 } from '../config/constants'
 

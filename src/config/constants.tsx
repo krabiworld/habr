@@ -173,12 +173,8 @@ export const HABR_LINKS_REPLACE_MAP = [
   },
 ]
 
-export const makeNavigationTabs = (
-  w = 24,
-  h = 24,
-  replaceProfile = false
-): TabObject[] => {
-  const tabs: TabObject[] = [
+export const makeNavigationTabs = (w = 24, h = 24): TabObject[] => {
+  return [
     {
       label: 'Статьи',
       icon: <Icon20HomeOutline width={w} height={h} />,
@@ -194,27 +190,17 @@ export const makeNavigationTabs = (
       match: 'news',
     },
     {
-      label: 'Поиск',
-      icon: <Icon24Search width={w} height={h} />,
-      to: () => '/search',
-      match: 'search',
-      tab: 'search',
-    },
-  ]
-  if (replaceProfile) {
-    tabs.push({
       label: 'Настройки',
       icon: <Icon28SettingsOutline width={w} height={h} />,
       to: () => '/settings',
+      tab: 'settings',
       match: [
         'settings',
         'settingsAppearance',
         'settingsLanguage',
       ],
-      tab: 'settings',
-    })
-  }
-  return tabs
+    },
+  ]
 }
 
 export const HOUR = 1000 * 60 * 60
