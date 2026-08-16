@@ -1,4 +1,3 @@
-import Flow from './Flow'
 import { HubPost } from './Hub'
 import PostLabel from './PostLabel'
 import { UserExtended } from './User'
@@ -8,7 +7,6 @@ export default interface Post {
   author: UserExtended
   commentsEnabled: boolean
   editorVersion: string
-  flows: Flow[]
   hubs: HubPost[]
   isCorporative: boolean
   isEditorial: boolean

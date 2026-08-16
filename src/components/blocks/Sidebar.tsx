@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import StickyBox from 'react-sticky-box'
 import {
-  APP_BAR_HEIGHT,
   BOTTOM_BAR_HEIGHT,
   MIDDLE_WIDTH,
   MIN_WIDTH,
@@ -17,7 +16,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const Sidebar = ({ withoutFlows, children }: { withoutFlows: boolean, children: React.ReactNode }) => {
+const Sidebar: React.FC<React.PropsWithChildren> = ({ children }) => {
   const classes = useStyles()
   const theme = useTheme()
   // future: https://material-ui.com/components/use-media-query/#server-side-rendering
@@ -35,7 +34,7 @@ const Sidebar = ({ withoutFlows, children }: { withoutFlows: boolean, children: 
   return shouldShowSidebar ? (
     <StickyBox
       className={classes.root}
-      offsetTop={theme.spacing(1.5) + (withoutFlows ? 0 : APP_BAR_HEIGHT)}
+      offsetTop={theme.spacing(1.5)}
       offsetBottom={
         theme.spacing(2) + (disableBottomOffset ? 0 : BOTTOM_BAR_HEIGHT)
       }

@@ -216,23 +216,25 @@ const PostSidebar = () => {
   }, [])
 
   return (
-    <Sidebar>
-      {mostReadingState !== FetchingState.Error && (
-        <SideBlock title={'Читают сейчас'}>
-          {mostReadingState !== FetchingState.Fetched && (
-            <MostReadingSideBlockSkeleton />
-          )}
-          {mostReadingState === FetchingState.Fetched &&
-            // TODO: fix types
-            //@ts-expect-error temporary fix
-            mostReading.articleIds.slice(0, 5).map((e) => (
-              // TODO: fix types
-              //@ts-expect-error temporary fix
-              <PostItem data={mostReading.articleRefs[e]} key={e} />
-            ))}
-        </SideBlock>
-      )}
-    </Sidebar>
+    <div style={{ marginTop: '12px' }}>
+      <Sidebar>
+        {mostReadingState !== FetchingState.Error && (
+            <SideBlock title={'Читают сейчас'}>
+              {mostReadingState !== FetchingState.Fetched && (
+                  <MostReadingSideBlockSkeleton />
+              )}
+              {mostReadingState === FetchingState.Fetched &&
+                  // TODO: fix types
+                  //@ts-expect-error temporary fix
+                  mostReading.articleIds.slice(0, 5).map((e) => (
+                      // TODO: fix types
+                      //@ts-expect-error temporary fix
+                      <PostItem data={mostReading.articleRefs[e]} key={e} />
+                  ))}
+            </SideBlock>
+        )}
+      </Sidebar>
+    </div>
   )
 }
 

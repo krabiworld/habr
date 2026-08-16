@@ -1,22 +1,5 @@
 import { NEWS_PREFIX } from './types'
 import getPostFirstImage from 'src/utils/getPostFirstImage'
-import { FLOWS } from 'src/config/constants'
-
-const flowsData: Record<
-  string,
-  {
-    // TODO: fix types
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    pages: any
-    pagesCount: null
-  }
-> = {}
-FLOWS.forEach((e) => {
-  flowsData[e.alias] = {
-    pages: {},
-    pagesCount: null,
-  }
-})
 
 const initialState = {
   fetching: false,
@@ -29,7 +12,6 @@ const initialState = {
     error: null,
     lastUpdated: null,
   },
-  flows: flowsData,
   data: {
     pages: {},
     pagesCount: null,
@@ -45,31 +27,22 @@ export default (state = initialState, { type, payload }) => {
     }
 
     case NEWS_PREFIX + 'FETCH_FULFILLED': {
-      const { page, pagesCount, data, flow } = payload
-      const ids = flow === 'all' ? data.publicationIds : data.newsIds
-      const refs = flow === 'all' ? data.publicationRefs : data.newsRefs
+      const { page, pagesCount, data } = payload
+      const ids = data.publicationIds
+      const refs = data.publicationRefs
 
       for (const id in refs) {
         refs[id].postFirstImage = getPostFirstImage(refs[id])
       }
 
-      if (flow === 'all') {
-        // TODO: fix types
-        //@ts-expect-error temporary fix
-        state.data.pages[page] = {
-          publicationIds: ids,
-          publicationRefs: refs,
-          lastUpdated: Date.now(),
-        }
-        state.data.pagesCount = pagesCount
-      } else {
-        state.flows[flow].pages[page] = {
-          publicationIds: ids,
-          publicationRefs: refs,
-          lastUpdated: Date.now(),
-        }
-        state.flows[flow].pagesCount = pagesCount
+      // TODO: fix types
+      //@ts-expect-error temporary fix
+      state.data.pages[page] = {
+        publicationIds: ids,
+        publicationRefs: refs,
+        lastUpdated: Date.now(),
       }
+      state.data.pagesCount = pagesCount
 
       return { ...state, fetching: false, fetched: true, error: null }
     }

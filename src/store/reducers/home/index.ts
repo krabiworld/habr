@@ -4,8 +4,8 @@ import {
   SIDEBAR_MOST_READING,
   SET_HOME_POST_ITEM_SIZE,
 } from './types'
-import { FLOWS, Mode, RATING_MODES } from 'src/config/constants'
-import { FetchingState, FlowAlias, Posts } from 'src/interfaces'
+import { Mode, RATING_MODES } from 'src/config/constants'
+import { FetchingState, Posts } from 'src/interfaces'
 import getCachedMode from 'src/utils/getCachedMode'
 import getPostFirstImage from 'src/utils/getPostFirstImage'
 
@@ -16,27 +16,12 @@ interface ModeObject {
 }
 
 const modes: Record<Mode, ModeObject> = {} as Record<Mode, ModeObject>
-const flowModes = {} as Record<FlowAlias, Record<string, ModeObject>>
 RATING_MODES.forEach(({ mode }) => {
   modes[mode] = {
     pages: {},
     pagesCount: null,
     lastUpdated: null,
   }
-})
-FLOWS.forEach((e) => {
-  // TODO: fix types
-  //@ts-expect-error temporary fix
-  flowModes[e.alias] = {}
-  RATING_MODES.forEach(({ mode }) => {
-    // TODO: fix types
-    //@ts-expect-error temporary fix
-    flowModes[e.alias][mode] = {
-      pages: {},
-      pagesCount: null,
-      lastUpdated: null,
-    }
-  })
 })
 
 const initialState = {
@@ -45,18 +30,6 @@ const initialState = {
   error: null,
   data: modes,
   sizesMap: {},
-  flows: {
-    fetching: false,
-    fetched: false,
-    error: null,
-    data: flowModes,
-  },
-  adverts: {
-    fetching: false,
-    fetched: false,
-    error: null,
-    data: null as unknown,
-  },
   sidebar: {
     mostReading: {
       state: FetchingState.Idle,
@@ -80,26 +53,19 @@ export default (
 ): typeof initialState => {
   switch (type) {
     case HOME_PREFIX + 'FETCH': {
-      if (payload.flow === 'all') {
-        state.fetching = true
-        state.fetched = false
-        state.error = null
-        state.mode = payload.mode
-      } else {
-        state.flows.fetching = true
-        state.flows.fetched = false
-        state.flows.error = null
-      }
+      state.fetching = true
+      state.fetched = false
+      state.error = null
+      state.mode = payload.mode
       return { ...state }
     }
 
     case HOME_PREFIX + 'FETCH_FULFILLED': {
-      const { page, pagesCount, data, mode, flow } = payload as {
+      const { page, pagesCount, data, mode } = payload as {
         page: number
         pagesCount: number
         data: Posts
         mode: Mode
-        flow: FlowAlias
       }
 
       for (const id in data.publicationRefs) {
@@ -107,39 +73,18 @@ export default (
           getPostFirstImage(data.publicationRefs[id]) || undefined
       }
 
-      if (flow === 'all') {
-        state.data[mode].pages[page] = data
-        state.data[mode].pagesCount = pagesCount
-        state.data[mode].lastUpdated = Date.now()
-        state.fetching = false
-        state.fetched = true
-        state.error = null
-      } else {
-        state.flows.data[flow][mode].pages[page] = data
-        state.flows.data[flow][mode].pagesCount = pagesCount
-        state.flows.data[flow][mode].lastUpdated = Date.now()
-        state.flows.fetching = false
-        state.flows.fetched = true
-        state.flows.error = null
-      }
+      state.data[mode].pages[page] = data
+      state.data[mode].pagesCount = pagesCount
+      state.data[mode].lastUpdated = Date.now()
+      state.fetching = false
+      state.fetched = true
+      state.error = null
 
       return { ...state }
     }
 
     case HOME_PREFIX + 'FETCH_REJECTED': {
-      if (payload.flow === 'all') {
-        return { ...state, fetching: false, fetched: false, error: payload }
-      } else {
-        return {
-          ...state,
-          flows: {
-            ...state.flows,
-            fetching: false,
-            fetched: false,
-            error: payload,
-          },
-        }
-      }
+      return { ...state, fetching: false, fetched: false, error: payload }
     }
 
     case SET_HOME_POST_ITEM_SIZE: {

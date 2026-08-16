@@ -1,4 +1,4 @@
-import { ModeObject, FlowObject, UserSettings } from '../interfaces'
+import { ModeObject, UserSettings } from '../interfaces'
 import {
   darken,
   alpha,
@@ -33,41 +33,6 @@ export const DRAWER_WIDTH = 280
 /** Local Storage keys */
 export const USER_SETTINGS_KEY = 'habr_USER_SETTINGS'
 export const NEEDS_UPDATE_KEY = 'habr_NEEDS_UPDATE'
-
-export const FLOWS: FlowObject[] = [
-  {
-    title: 'Все потоки',
-    alias: 'all',
-  },
-  {
-    title: 'Разработка',
-    alias: 'develop',
-  },
-  {
-    title: 'Администрирование',
-    alias: 'admin',
-  },
-  {
-    title: 'Дизайн',
-    alias: 'design',
-  },
-  {
-    title: 'Менеджмент',
-    alias: 'management',
-  },
-  {
-    title: 'Маркетинг',
-    alias: 'marketing',
-  },
-  {
-    title: 'Научпоп',
-    alias: 'popsci',
-  },
-  {
-    title: 'Моя лента',
-    alias: 'feed',
-  },
-]
 
 export const RATING_MODES: ModeObject[] = [
   {

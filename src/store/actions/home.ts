@@ -1,6 +1,5 @@
 import * as api from 'src/api'
 import { Mode } from 'src/config/constants'
-import FlowAlias from 'src/interfaces/FlowAlias'
 import { shouldUpdate } from 'src/utils/cache'
 import { RootState } from '..'
 import {
@@ -13,41 +12,36 @@ import {
 interface GetPostsParams {
   mode: Mode
   page: number
-  flow: FlowAlias
   forceUpdate?: boolean
 }
 
-export const getPosts =
-  ({ mode, page, flow, forceUpdate = false }: GetPostsParams) =>
+export const getPosts = ({ mode, page, forceUpdate = false }: GetPostsParams) =>
   // TODO: fix types
   //@ts-expect-error temporary fix
     async (dispatch, getState: () => RootState) => {
       const type = HOME_PREFIX + 'FETCH'
       // Get data from root store to find out if we're going to fetch a data or not
       const storeState = getState()
-      const storeData =
-      flow === 'all'
-        ? storeState.home.data[mode].pages[page]
-        : storeState.home.flows.data[flow][mode].pages[page]
+      const storeData = storeState.home.data[mode].pages[page]
 
       if (!shouldUpdate(storeData) && !forceUpdate) {
         return Promise.resolve()
       }
 
-      dispatch({ type, payload: { mode, flow } })
+      dispatch({ type, payload: { mode } })
 
       try {
-        const data = await api.getPosts({ mode, page, flow })
+        const data = await api.getPosts({ mode, page })
         const pagesCount = data?.pagesCount
 
         dispatch({
           type: type + '_FULFILLED',
-          payload: { data: data, mode, page, pagesCount, flow },
+          payload: { data: data, mode, page, pagesCount },
         })
       } catch (error) {
         dispatch({
           type: type + '_REJECTED',
-          payload: { error: (error as Error)?.message, mode, page, flow },
+          payload: { error: (error as Error)?.message, mode, page },
         })
       }
     }
