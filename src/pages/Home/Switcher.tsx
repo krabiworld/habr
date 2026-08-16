@@ -278,11 +278,6 @@ const Switcher: React.FC<{
       </ButtonBase>
 
       <div className={classes.switcherDesktop}>
-        {currentFlow && (
-          <Typography className={classes.currentFlow}>
-            {currentFlow.title}
-          </Typography>
-        )}
         <div className={classes.inline}>
           <TabGroup
             handleShowModeChange={(m) => handleShowModeChange(m, true)}

@@ -31,7 +31,7 @@ export const POST_IMAGE_HEIGHT = 212
 export const DEFAULT_POST_ITEM_HEIGHT = 390
 export const BOTTOM_BAR_HEIGHT = 52
 export const APP_BAR_HEIGHT = 48
-export const DRAWER_WIDTH = 296
+export const DRAWER_WIDTH = 280
 
 /** Local Storage keys */
 export const USER_SETTINGS_KEY = 'habr_USER_SETTINGS'

@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
   inlineContainer: {
     display: 'inline-flex',
-    gap: theme.spacing(2),
-    marginLeft: theme.spacing(2),
+    gap: theme.spacing(1),
+    marginLeft: theme.spacing(1),
   },
   inlineButton: {
     padding: theme.spacing(1, 2),
