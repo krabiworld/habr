@@ -7,26 +7,18 @@ import React, { MemoExoticComponent } from 'react'
 import Post from 'src/pages/Post'
 import Settings from 'src/pages/Settings/index'
 import SettingsAppearance from 'src/pages/Settings/Appearance'
-import SettingsBlacklist from 'src/pages/Settings/Blacklist'
-import SettingsInterface from 'src/pages/Settings/Interface'
-import SettingsReader from 'src/pages/Settings/Reader'
-import SettingsImport from 'src/pages/Settings/ImportSettings'
 import SettingsLanguage from 'src/pages/Settings/Language'
 import Search from 'src/pages/Search'
 import News from 'src/pages/News'
 import NotFound from 'src/pages/NotFound'
-import Thread from 'src/pages/Comments/Thread'
 import CommentsPage from 'src/pages/Comments'
 import getCachedMode from 'src/utils/getCachedMode'
-import Hubs from 'src/pages/Hubs/index'
 import User from 'src/pages/User/index'
 import { Redirect } from 'react-router'
 import { Theme } from '@material-ui/core'
 import Home from 'src/pages/Home/index'
 import UserArticles from 'src/pages/User/pages/Articles'
 import getContrastPaperColor from 'src/utils/getContrastPaperColor'
-import Hub from 'src/pages/Hub/index'
-import HubAuthors from 'src/pages/Hub/pages/Authors'
 
 export interface Route {
   path: string | string[]
@@ -39,14 +31,6 @@ export interface Route {
 }
 
 export const routes: Route[] = [
-  {
-    path: '/post/:id/comments/thread/:threadId',
-    component: <Thread />,
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'commentsThread',
-  },
   {
     path: '/post/:id/comments',
     component: <CommentsPage />,
@@ -80,24 +64,6 @@ export const routes: Route[] = [
     alias: 'post',
   },
   {
-    path: '/settings/reader',
-    component: <SettingsReader />,
-    title: 'Параметры чтения',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => getContrastPaperColor(theme),
-    alias: 'settingsReader',
-  },
-  {
-    path: '/settings/interface',
-    component: <SettingsInterface />,
-    title: 'Настройки интерфейса',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => getContrastPaperColor(theme),
-    alias: 'settingsInterface',
-  },
-  {
     path: '/settings/language',
     component: <SettingsLanguage />,
     title: 'Настройки языка',
@@ -116,24 +82,6 @@ export const routes: Route[] = [
     alias: 'settingsAppearance',
   },
   {
-    path: '/settings/blacklist',
-    component: <SettingsBlacklist />,
-    title: 'Чёрный список',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => getContrastPaperColor(theme),
-    alias: 'settingsBlacklist',
-  },
-  {
-    path: '/settings/import',
-    component: <SettingsImport />,
-    title: 'Импорт настроек',
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => getContrastPaperColor(theme),
-    alias: 'settingsBlacklist',
-  },
-  {
     path: '/settings',
     component: <Settings />,
     title: 'Настройки',
@@ -150,43 +98,6 @@ export const routes: Route[] = [
     shouldAppBarChangeColors: true,
     appBarColor: (theme) => theme.palette.background.default,
     alias: 'search',
-  },
-  {
-    path: '/hubs/p/:page',
-    component: <Hubs />,
-    title: 'Хабы',
-    shouldShowAppBar: true,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'hubs',
-  },
-  {
-    path: '/hub/:alias/authors/p/:page',
-    component: <HubAuthors />,
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'hubAuthors',
-  },
-  {
-    path: [
-      '/hub/:alias/p/:page',
-      '/hub/:alias/top0/p/:page',
-      '/hub/:alias/top10/p/:page',
-      '/hub/:alias/top25/p/:page',
-      '/hub/:alias/top50/p/:page',
-      '/hub/:alias/top100/p/:page',
-      '/hub/:alias/top/daily/p/:page',
-      '/hub/:alias/top/weekly/p/:page',
-      '/hub/:alias/top/monthly/p/:page',
-      '/hub/:alias/top/yearly/p/:page',
-      '/hub/:alias/top/alltime/p/:page',
-    ],
-    component: <Hub />,
-    shouldShowAppBar: false,
-    shouldAppBarChangeColors: false,
-    appBarColor: (theme) => theme.palette.background.default,
-    alias: 'hub',
   },
   {
     path: '/user/:login/articles/p/:page',

@@ -18,8 +18,6 @@ import { Node as MathJaxNode } from '@nteract/mathjax'
 import getInvertedContrastPaperColor from 'src/utils/getInvertedContrastPaperColor'
 import isDarkTheme from 'src/utils/isDarkTheme'
 import { APP_BAR_HEIGHT, MIN_WIDTH } from 'src/config/constants'
-import { useSelector } from 'src/hooks'
-import { UserSettings } from 'src/interfaces'
 import formatLink from 'src/utils/formatLink'
 import { Link } from 'react-router-dom'
 import blend from 'src/utils/blendColors'
@@ -36,7 +34,6 @@ const useStyles = makeStyles<
   Theme,
   {
     oldHabrFormat: boolean
-    readerSettings: UserSettings['readerSettings']
     inverseColors: boolean
   }
 >((theme) => ({
@@ -47,8 +44,8 @@ const useStyles = makeStyles<
     borderRadius: 4,
   },
   text: {
-    fontSize: ({ readerSettings }) => readerSettings.fontSize,
-    fontFamily: ({ readerSettings }) => readerSettings.fontFamily,
+    fontSize: 16,
+    fontFamily: 'Google Sans',
     '& a': {
       color: theme.palette.primary.main,
       textDecoration: 'none',
@@ -63,8 +60,8 @@ const useStyles = makeStyles<
     },
     '& p': {
       margin: 0,
-      fontSize: ({ readerSettings }) => readerSettings.fontSize,
-      fontFamily: ({ readerSettings }) => readerSettings.fontFamily,
+      fontSize: 16,
+      fontFamily: 'Google Sans',
     },
     '& p+p, pre+p': {
       marginTop: ({ oldHabrFormat: d }) => (d ? 0 : theme.spacing(3)),
@@ -269,14 +266,10 @@ const FormattedText: React.FC<{
   disableImageZoom = false,
   ...props
 }) => {
-  const readerSettings = useSelector((store) => store.settings.readerSettings)
-  const classes = useStyles({ oldHabrFormat, readerSettings, inverseColors })
+  const classes = useStyles({ oldHabrFormat, inverseColors })
   const [iframeHeights, setIframeHeights] = React.useState<
     Record<string, number>
   >({})
-  const shouldChangeLinks = useSelector(
-    (store) => store.settings.readerSettings.changeLinks
-  )
   const options: HTMLReactParserOptions = {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-expect-error
@@ -396,7 +389,7 @@ const FormattedText: React.FC<{
           </a>
         )
       }
-      if (name === 'a' && shouldChangeLinks) {
+      if (name === 'a') {
         const formattedLink = formatLink(attribs.href)
         if (formattedLink)
           return (

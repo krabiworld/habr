@@ -31,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PostSkeleton = () => {
   const classes = useStyles()
-  const disablePostImage = useSelector(
-    (store) => store.settings.interfaceFeed.disablePostImage
-  )
   const theme = useTheme()
 
   return (
@@ -60,19 +57,17 @@ const PostSkeleton = () => {
             height={20}
           />
         </Grid>
-        {!disablePostImage && (
-          <Grid item xs={12}>
-            <Skeleton
-              variant="rect"
-              width="100%"
-              className={classes.skeletonImage}
-              height={POST_IMAGE_HEIGHT}
-            />
-          </Grid>
-        )}
+        <Grid item xs={12}>
+          <Skeleton
+            variant="rect"
+            width="100%"
+            className={classes.skeletonImage}
+            height={POST_IMAGE_HEIGHT}
+          />
+        </Grid>
         <Grid
           container
-          style={{ paddingTop: disablePostImage ? 0 : theme.spacing(2) }}
+          style={{ paddingTop: theme.spacing(2) }}
           className={classes.padding}
         >
           <Grid item xs={12}>

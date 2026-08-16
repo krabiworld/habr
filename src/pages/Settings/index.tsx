@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { alpha, Typography, useTheme } from '@material-ui/core'
+import { alpha, Typography } from '@material-ui/core'
 import isDarkTheme from 'src/utils/isDarkTheme'
 import { MIN_WIDTH } from 'src/config/constants'
 import LinkToOutsidePage from 'src/components/blocks/LinkToOutsidePage'
@@ -9,10 +9,7 @@ import {
   Icon24PaletteOutline,
   Icon24HideOutline,
   Icon24ChevronRight,
-  Icon243SquareOutline,
-  Icon28ArticleOutline,
   Icon28GlobeOutline,
-  Icon28DownloadOutline,
 } from '@vkontakte/icons'
 
 const items = [
@@ -27,24 +24,9 @@ const items = [
     text: 'Чёрный список',
   },
   {
-    icon: Icon243SquareOutline,
-    to: '/interface',
-    text: 'Настройки интерфейса',
-  },
-  {
-    icon: Icon28ArticleOutline,
-    to: '/reader',
-    text: 'Параметры чтения',
-  },
-  {
     icon: Icon28GlobeOutline,
     to: '/language',
     text: 'Настройки языка',
-  },
-  {
-    icon: Icon28DownloadOutline,
-    to: '/import',
-    text: 'Импорт настроек',
   },
 ]
 
@@ -95,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Settings = () => {
   const classes = useStyles()
-  const theme = useTheme()
 
   return (
     <div className={classes.root}>

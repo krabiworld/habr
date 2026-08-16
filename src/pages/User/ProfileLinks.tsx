@@ -1,11 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Badge, Button, Typography } from '@material-ui/core'
-import {
-  Icon28CommentOutline,
-  Icon20BookmarkOutline,
-  Icon28ArticleOutline,
-} from '@vkontakte/icons'
+import { Icon28ArticleOutline } from '@vkontakte/icons'
 import { useHistory, useLocation } from 'react-router-dom'
 import OutsidePageLocationState from 'src/interfaces/OutsidePageLocationState'
 import { useSelector } from 'src/hooks'
@@ -54,26 +50,11 @@ const ProfileLinks = () => {
       text: 'Публикации',
       badgeContent: profile?.counterStats.postCount,
     },
-    {
-      icon: Icon28CommentOutline,
-      to: `https://habr.com/users/${profile?.alias}/comments/`,
-      external: true,
-      text: 'Комментарии',
-      style: { transform: 'scale(1.1)' },
-      badgeContent: profile?.counterStats.commentCount,
-    },
-    {
-      icon: Icon20BookmarkOutline,
-      to: `https://habr.com/en/users/${profile?.alias}/bookmarks/articles/`,
-      external: true,
-      text: 'Закладки',
-      badgeContent: profile?.counterStats.favoriteCount,
-    },
   ]
 
   return (
     <div className={classes.root}>
-      {buttons.map(({ icon: Icon, text, style, to, external, badgeContent }, i) => (
+      {buttons.map(({ icon: Icon, text, to, external, badgeContent }, i) => (
         <Button
           key={i}
           classes={{ root: classes.button, label: classes.buttonLabel }}
@@ -94,7 +75,7 @@ const ProfileLinks = () => {
             color="primary"
             invisible={badgeContent === 0}
           >
-            <Icon width={28} height={28} style={style} />
+            <Icon width={28} height={28} />
           </Badge>
           <Typography className={classes.buttonText}>{text}</Typography>
         </Button>

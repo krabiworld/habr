@@ -98,23 +98,21 @@ const CompanyCardWithLinks: React.FC<{
   return (
     <div className={classes.root}>
       <div className={classes.flexRow}>
-        <a href={`https://habr.com/companies/${company?.alias}/profile/`} target="_blank" className={classes.link}>
-          <UserAvatar
-            className={classes.avatar}
-            src={company?.imageUrl}
-            alias={company?.alias}
-          />
-          <div className={classes.companyNameAndDescription}>
-            <FormattedText className={classes.companyName}>
-              {company?.titleHtml || ''}
+        <UserAvatar
+          className={classes.avatar}
+          src={company?.imageUrl}
+          alias={company?.alias}
+        />
+        <div className={classes.companyNameAndDescription}>
+          <FormattedText className={classes.companyName}>
+            {company?.titleHtml || ''}
+          </FormattedText>
+          {company?.descriptionHtml && (
+            <FormattedText className={classes.description}>
+              {company.descriptionHtml}
             </FormattedText>
-            {company?.descriptionHtml && (
-              <FormattedText className={classes.description}>
-                {company.descriptionHtml}
-              </FormattedText>
-            )}
-          </div>
-        </a>
+          )}
+        </div>
       </div>
       <div className={classes.links}>
         {company?.contacts.map((e, i) => (

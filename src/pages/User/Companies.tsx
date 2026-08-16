@@ -54,12 +54,7 @@ const Companies = ({ classes: additionalClasses }: ComponentWithUserParams) => {
   }, [profile?.alias, dispatch])
 
   const Item = ({ data }: { data: Company }) => (
-    <ListItem
-      style={{ paddingLeft: 0, paddingRight: 0 }}
-      component="a"
-      href={`https://habr.com/companies/${data.alias}/profile/`}
-      target="_blank"
-    >
+    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
       <ListItemAvatar>
         <UserAvatar
           className={classes.avatar}

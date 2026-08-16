@@ -25,27 +25,9 @@ export interface CustomTheme {
 
 export default interface UserSettings {
   themeType: PaletteType | string
-  hiddenAuthors: string[]
-  hiddenCompanies: string[]
   autoChangeTheme: boolean
   preferredLightTheme: PaletteType | string
   preferredDarkTheme: PaletteType | string
-  readerSettings: {
-    fontSize: number
-    fontFamily: string
-    changeLinks: boolean
-    replaceImagesWithPlaceholder: boolean
-  }
-  interfaceFeed: {
-    isCompact: boolean
-    hideMegaposts: boolean
-    disablePostImage: boolean
-    openPostsInNewTab: boolean
-  }
-  interfaceComments: {
-    showThreads: boolean
-    sortByKarma: boolean
-  }
   language: {
     feed: 'ru' | 'en' | 'ru,en'
     interface: 'ru' | 'en'

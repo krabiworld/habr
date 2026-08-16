@@ -1,29 +1,18 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  DONATION_LINKS_MAP,
-  DONATION_TITLES_MAP,
-  MIN_WIDTH,
-} from 'src/config/constants'
+import { MIN_WIDTH } from 'src/config/constants'
 import { Post } from 'src/interfaces'
 import UserAvatar from 'src/components/blocks/UserAvatar'
 import {
   Typography,
   useTheme,
   IconButton,
-  Button,
-  Dialog,
-  DialogTitle,
-  List,
-  ListItem,
-  ListItemText,
   Link as MUILink,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import SubscribeButton from 'src/components/blocks/SubscribeButton'
 import { Icon16Up, Icon16Down } from '@vkontakte/icons'
 import GreenRedNumber from 'src/components/formatters/GreenRedNumber'
-import { CloseRounded } from '@material-ui/icons'
 import FormattedText from 'src/components/formatters/FormattedText'
 
 const INLINE_BUTTONS_WIDTH = 660
@@ -141,70 +130,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const DonateDialog: React.FC<{
-  open: boolean
-  post: Post
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ open, setOpen, post }) => {
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const paymentDetails = Object.keys(post.author.paymentDetails).map((e) => ({
-    field: e,
-    // TODO: fix types
-    //@ts-expect-error temporary fix
-    value: post.author.paymentDetails[e],
-  }))
-
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle
-        style={{
-          padding: '8px 20px 0 4px',
-        }}
-      >
-        <IconButton onClick={handleClose} style={{ marginRight: 8 }}>
-          <CloseRounded />
-        </IconButton>
-        Платежная система
-      </DialogTitle>
-      <List>
-        {paymentDetails.map(
-          (e) =>
-            e.value && (
-              <ListItem
-                button
-                key={e.field}
-                component={'a'}
-                target={'_blank'}
-                // TODO: fix types
-                //@ts-expect-error temporary fix
-                href={DONATION_LINKS_MAP[e.field] + e.value}
-              >
-                <ListItemText
-                  // TODO: fix types
-                  //@ts-expect-error temporary fix
-                  primary={DONATION_TITLES_MAP[e.field]}
-                  secondary={e.value}
-                />
-              </ListItem>
-            )
-        )}
-      </List>
-    </Dialog>
-  )
-}
-
-const AuthorCard: React.FC<{
-  post: Post | null
-}> = ({ post }) => {
+const AuthorCard: React.FC<{post: Post | null}> = ({ post }) => {
   const classes = useStyles()
   const [isSubscribed, setSubscribed] = useState(false)
-  const [isDonateDialogOpen, setDonateDialogOpen] = useState(false)
   const theme = useTheme()
-  const shouldShowDonateButton =
-    post && Object.values(post.author.paymentDetails).some((e) => !!e)
 
   if (!post) return null
 
@@ -291,23 +220,6 @@ const AuthorCard: React.FC<{
           setSubscribed={setSubscribed}
           backgroundColor={theme.palette.background.paper}
         />
-        {shouldShowDonateButton && (
-          <>
-            <Button
-              variant={'outlined'}
-              color={'primary'}
-              className={classes.button}
-              onClick={() => setDonateDialogOpen(true)}
-            >
-              Задонатить
-            </Button>
-            <DonateDialog
-              open={isDonateDialogOpen}
-              setOpen={setDonateDialogOpen}
-              post={post}
-            />
-          </>
-        )}
       </div>
     </div>
   )

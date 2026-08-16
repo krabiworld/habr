@@ -16,8 +16,6 @@ export interface Comment {
   /** Generated on comments parsing */
   isLastInThread?: boolean
   isNewLevel?: boolean
-  isThreadStart?: boolean
-  threadLevel?: number
 
   id: number
   parentId: number

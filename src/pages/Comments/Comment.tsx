@@ -250,15 +250,12 @@ const Comment: React.FC<{
   isLastInFilteredRootThread: boolean
   postId: string
   placeholderSize?: number
-}> = ({ data, isLastInFilteredRootThread, postId }) => {
+}> = ({ data, isLastInFilteredRootThread }) => {
   const isRootComment = data.level === 0
-  const { id, isLastInThread, isPostAuthor, isThreadStart } = data
+  const { id, isLastInThread, isPostAuthor } = data
   const theme = useTheme()
   const classes = useStyles()
   const rootRef = useRef<HTMLDivElement>(null)
-  const shouldShowThreadButtonSetting = useSelector(
-    (store) => store.settings.interfaceComments.showThreads
-  )
   const commentsSizesMap = useSelector((store) => store.post.comments.sizesMap)
   const timeEdited = dayjs(data.timeChanged).format('DD.MM.YYYY [в] H:mm')
   const isEdited = !!data.timeChanged
@@ -268,7 +265,6 @@ const Comment: React.FC<{
   const isTablet = useMediaQuery(theme.breakpoints.up(MIN_WIDTH), {
     noSsr: true,
   })
-  const shouldShowThreadButton = shouldShowThreadButtonSetting && isThreadStart
   const MARGIN_LEVEL = isTablet ? 20 : 16
   const commentPadding = data.level * MARGIN_LEVEL
   const commentOpacity = data.score < 0 ? getOpacity(data.score) : 1
@@ -280,46 +276,9 @@ const Comment: React.FC<{
   shouldAddBottomPadding && rootClasses.push(classes.bottomPadding)
   isPostAuthor && authorBarClasses.push(classes.authorBarOP)
 
-  const setCommentSize = () => {
-    // We don't need to set placeholder height without threads
-    // because there is no page changing in one modal
-    if (shouldShowThreadButtonSetting && rootRef.current) {
-      dispatch(
-        setPostCommentSize(
-          data.id,
-          rootRef.current.getBoundingClientRect().height
-        )
-      )
-    }
-  }
   const getCommentSize = () => {
     return commentsSizesMap[data.id] || DEFAULT_PLACEHOLDER_SIZE
   }
-
-  const GoToThreadButton = () =>
-    shouldShowThreadButton ? (
-      <div className={classes.goToThreadWrapper}>
-        <div
-          className={classes.depthLine}
-          style={{
-            top: 0,
-            bottom: 0,
-          }}
-        />
-        <LinkToOutsidePage
-          className={classes.goToThreadLink}
-          to={'/post/' + postId + '/comments/thread/' + id}
-        >
-          <Button
-            color="primary"
-            className={classes.goToThreadButton}
-            endIcon={<ChevronRightRoundedIcon />}
-          >
-            Показать ветку
-          </Button>
-        </LinkToOutsidePage>
-      </div>
-    ) : null
 
   if (!data.author) {
     return (
@@ -358,7 +317,6 @@ const Comment: React.FC<{
               >
                 {data.message}
               </FormattedText>
-              <GoToThreadButton />
             </div>
           </Fade>
         </div>
@@ -368,7 +326,6 @@ const Comment: React.FC<{
 
   return (
     <LazyLoadComponent
-      afterLoad={setCommentSize}
       placeholder={
         <div
           style={{
@@ -477,7 +434,6 @@ const Comment: React.FC<{
                 <BookmarkIcon className={classes.favoriteIcon} />
               </Button>
             </div>
-            <GoToThreadButton />
           </div>
         </Fade>
       </div>

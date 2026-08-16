@@ -7,7 +7,6 @@ import PostSkeleton from 'src/components/skeletons/PostItem'
 import PostItem from 'src/components/blocks/PostItem'
 import Pagination from 'src/components/blocks/Pagination'
 import ErrorComponent from 'src/components/blocks/Error'
-import NewsBlock from 'src/pages/Home/NewsBlock'
 import {
   APP_BAR_HEIGHT,
   DEFAULT_POST_ITEM_HEIGHT,
@@ -217,13 +216,7 @@ const Home = () => {
           <List className={classes.list}>
             {isFetching &&
               [...new Array(4)].map((_, i) => <PostSkeleton key={i} />)}
-            {isFetched && !fetchError && posts && (
-              <>
-                {postsComponents[0]}
-                {currentPage === 1 && <NewsBlock />}
-                {postsComponents.slice(1)}
-              </>
-            )}
+            {isFetched && !fetchError && posts && postsComponents}
             {fetchError && (
               <ErrorComponent
                 code={fetchErrorCode}

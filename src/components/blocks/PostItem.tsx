@@ -20,10 +20,9 @@ import {
   POST_ITEM_VISIBILITY_THRESHOLD,
   POST_LABELS,
 } from 'src/config/constants'
-import LazyLoadImage from './LazyLoadImage'
 import { useSelector } from 'src/hooks'
 import RightIcon from '@material-ui/icons/ChevronRightRounded'
-import { Button, Chip, alpha, Theme, CircularProgress } from '@material-ui/core'
+import { Button, Chip, alpha, Theme } from '@material-ui/core'
 import getPostLink from 'src/utils/getPostLink'
 import VisibilitySensor from 'react-visibility-sensor'
 import { useLocation, useHistory } from 'react-router-dom'
@@ -32,20 +31,14 @@ import LinkToOutsidePage from './LinkToOutsidePage'
 import isDarkTheme from 'src/utils/isDarkTheme'
 import FormattedText from '../formatters/FormattedText'
 import getImagesFromText from 'src/utils/getImagesFromText'
-import { useSnackbar } from 'notistack'
-import setArticleBookmark from 'src/api/setArticleBookmark'
 import { useEffect } from 'react'
-import useIsPWA from 'src/hooks/useIsPWA'
 
 const NBSP_CHAR = ' '
 const WHITESPACE_CHAR = ' '
 const ld = (theme: Theme) => (isDarkTheme(theme) ? darken : lighten)
 const useStyles = makeStyles<
   Theme,
-  {
-    hasImage: boolean
-    isExtended: boolean
-  }
+  { hasImage: boolean }
 >((theme) => ({
   noDeco: {
     textDecoration: 'none !important',
@@ -179,11 +172,7 @@ const useStyles = makeStyles<
     display: 'flex',
     alignItems: 'center',
     textDecoration: 'none !important',
-    paddingBottom: ({ hasImage, isExtended }) => {
-      if (isExtended) return theme.spacing(1)
-      else if (hasImage) return theme.spacing(2)
-      else return 0
-    },
+    paddingBottom: theme.spacing(1),
   },
   trollWrapper: {
     display: 'flex',
@@ -234,9 +223,6 @@ const useStyles = makeStyles<
     fontSize: 13,
     transitionDuration: '100ms',
     textDecoration: 'none',
-    '&:hover': {
-      color: theme.palette.primary.light,
-    },
     ...theme.typography.body2,
   },
   hubWrapper: {
@@ -262,33 +248,14 @@ interface BottomRowItemType {
 export const PostItem = ({
   post,
   style,
-  hideImage: hideImageProp = false,
   setPostItemSize,
   getPostItemSize = () => DEFAULT_POST_ITEM_HEIGHT,
 }: {
   post?: Post
   style?: Record<string, unknown>
-  hideImage?: boolean
   setPostItemSize?: (id: number | string, size: number) => void
   getPostItemSize?: (id?: number | string) => number
 }) => {
-  const isPWA = useIsPWA()
-  const isExtended = useSelector(
-    (store) => !store.settings.interfaceFeed.isCompact
-  )
-  const shouldReplaceImagesWithPlaceholder = useSelector(
-    (store) => store.settings.readerSettings.replaceImagesWithPlaceholder
-  )
-  const shouldOpenInNewTabSetting = useSelector(
-    (store) => store.settings.interfaceFeed.openPostsInNewTab
-  )
-  const shouldOpenInNewTab = !isPWA && shouldOpenInNewTabSetting
-  const disablePostImage = useSelector(
-    (store) => store.settings.interfaceFeed.disablePostImage
-  )
-  const hideImage =
-    hideImageProp || disablePostImage || shouldReplaceImagesWithPlaceholder
-  const { enqueueSnackbar } = useSnackbar()
   const {
     titleHtml: unparsedTitle,
     statistics,
@@ -296,19 +263,9 @@ export const PostItem = ({
     leadData,
   } = post || {}
   const hasImagesInLeadText = !!getImagesFromText(leadData?.textHtml || '')
-  const classes = useStyles({
-    hasImage: (!!postFirstImage || hasImagesInLeadText) && !hideImage,
-    isExtended,
-  })
+  const classes = useStyles({hasImage: (!!postFirstImage || hasImagesInLeadText)})
 
-  const hiddenAuthors = useSelector((state) => state.settings.hiddenAuthors)
-  const hiddenCompanies = useSelector((state) => state.settings.hiddenCompanies)
-  const postBookmarked = post?.relatedData?.bookmarked || false
   const unreadCommentsCount = post?.relatedData?.unreadCommentsCount || 0
-  const [isBookmarked, setBookmarkState] =
-    React.useState<boolean>(postBookmarked)
-  const [isFetchingBookmarkResponse, setIsFetchingBookmarkResponse] =
-    React.useState(false)
   const [isRendered, setIsRendered] = React.useState(false)
   const history = useHistory<OutsidePageLocationState>()
   const location = useLocation()
@@ -320,20 +277,9 @@ export const PostItem = ({
   const score = formatNumber(statistics?.score || 0)
   const title = parse(unparsedTitle?.replace(NBSP_CHAR, WHITESPACE_CHAR) || '')
   const reads = formatNumber(statistics?.readingCount || 0)
-  let favoritesCountAddAmount: number
-  if (postBookmarked) {
-    favoritesCountAddAmount = isBookmarked ? 0 : -1
-  } else {
-    favoritesCountAddAmount = isBookmarked ? 1 : 0
-  }
-  const favorites = formatNumber(
-    (statistics?.favoritesCount || 0) + favoritesCountAddAmount
-  )
+  const favorites = formatNumber(statistics?.favoritesCount || 0)
   const comments = formatNumber(Number(statistics?.commentsCount))
   const isCorporative = post?.isCorporative
-  const companyAlias = isCorporative
-    ? post?.hubs?.find((e) => e.type === 'corporative')?.alias
-    : null
   const rootRef = React.useRef<HTMLDivElement>()
   const placeholderStyles = React.useMemo(
     () => ({ height: getPostItemSize(post?.id) }),
@@ -342,9 +288,8 @@ export const PostItem = ({
   const postLink = post && getPostLink(post)
   const linkProps = {
     rel: 'noreferrer',
-    target: shouldOpenInNewTab ? '_target' : '_self',
+    target: '_self',
   }
-  const shouldShowPostImage = postFirstImage && !hideImage && !isExtended
   const bottomRow: BottomRowItemType[] = [
     {
       icon: <ThumbsUpDownIcon className={classes.postBottomRowItemIcon} />,
@@ -357,26 +302,8 @@ export const PostItem = ({
       text: <>{reads}</>,
     },
     {
-      icon: isFetchingBookmarkResponse ? (
-        <CircularProgress
-          className={classes.postBottomRowItemIcon}
-          style={{ width: 16, height: 16 }}
-          thickness={5}
-        />
-      ) : (
-        <BookmarkIcon
-          className={classes.postBottomRowItemIcon}
-          color={isBookmarked ? 'primary' : 'inherit'}
-        />
-      ),
+      icon: <BookmarkIcon className={classes.postBottomRowItemIcon} />,
       text: <>{favorites}</>,
-      isActive: isBookmarked,
-      action: async () => {
-        enqueueSnackbar('Нужна авторизация', {
-          variant: 'error',
-          autoHideDuration: 4000,
-        })
-      },
     },
     {
       icon: <ChatBubbleIcon className={classes.postBottomRowItemIcon} />,
@@ -472,35 +399,6 @@ export const PostItem = ({
     )
   }
 
-  // Return troll text for hidden post
-  if (
-    (alias && hiddenAuthors.includes(alias)) ||
-    (companyAlias && isCorporative && hiddenCompanies.includes(companyAlias))
-  )
-    return (
-      <LinkToOutsidePage
-        {...linkProps}
-        to={postLink || ''}
-        style={{ textDecoration: 'none' }}
-      >
-        <Paper
-          style={{ padding: 16, display: 'flex', flexDirection: 'row' }}
-          elevation={0}
-          className={classes.paper}
-        >
-          <div className={classes.trollWrapper}>
-            <Typography className={classes.trollText}>
-              Тут был тролль / @{alias}
-            </Typography>
-            <Typography className={classes.trollTextTitle}>{title}</Typography>
-          </div>
-          <div className={classes.trollLink}>
-            <RightIcon />
-          </div>
-        </Paper>
-      </LinkToOutsidePage>
-    )
-
   return (
     <VisibilitySensor
       partialVisibility
@@ -535,24 +433,6 @@ export const PostItem = ({
                 {ts}
               </Typography>
             </LinkToOutsidePage>
-            {shouldShowPostImage && (
-              <LinkToOutsidePage
-                {...linkProps}
-                className={classes.imageHolder}
-                to={postLink || ''}
-              >
-                <LazyLoadImage
-                  src={postFirstImage}
-                  alt={'Post header image'}
-                  className={classes.image}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                  }}
-                  disableZoom
-                />
-              </LinkToOutsidePage>
-            )}
 
             <LinkToOutsidePage
               className={[classes.postLink, classes.noDeco].join(' ')}
@@ -563,20 +443,15 @@ export const PostItem = ({
             </LinkToOutsidePage>
 
             {/** Post hubs */}
-            {isExtended && (
-              <div className={classes.hubs}>
-                {post.hubs.map((hub, i) => (
-                  <span key={i} className={classes.hubWrapper}>
-                    <LinkToOutsidePage
-                      className={classes.hubLink}
-                      to={'/hub/' + hub.alias + '/p/1'}
-                    >
-                      {hub.title}
-                    </LinkToOutsidePage>
+            <div className={classes.hubs}>
+              {post.hubs.map((hub, i) => (
+                <span key={i} className={classes.hubWrapper}>
+                  <span className={classes.hubLink}>
+                    {hub.title}
                   </span>
-                ))}
-              </div>
-            )}
+                </span>
+              ))}
+            </div>
 
             {/** Post labels */}
             <div className={classes.labelsContainer}>
@@ -595,35 +470,33 @@ export const PostItem = ({
               )}
             </div>
 
-            {isExtended && (
-              <div className={classes.leadText}>
-                {!hasImagesInLeadText && postFirstImage && (
-                  <div className={classes.leadImageWrapper}>
-                    <img
-                      src={postFirstImage}
-                      alt={'Post header image'}
-                      className={classes.leadImage}
-                    />
-                  </div>
-                )}
-                <FormattedText disableImageZoom>
-                  {leadData?.textHtml || ''}
-                </FormattedText>
-                <LinkToOutsidePage
-                  {...linkProps}
-                  to={postLink || ''}
-                  className={classes.link}
+            <div className={classes.leadText}>
+              {!hasImagesInLeadText && postFirstImage && (
+                <div className={classes.leadImageWrapper}>
+                  <img
+                    src={postFirstImage}
+                    alt={'Post header image'}
+                    className={classes.leadImage}
+                  />
+                </div>
+              )}
+              <FormattedText disableImageZoom>
+                {leadData?.textHtml || ''}
+              </FormattedText>
+              <LinkToOutsidePage
+                {...linkProps}
+                to={postLink || ''}
+                className={classes.link}
+              >
+                <Button
+                  color="primary"
+                  className={classes.leadButton}
+                  variant={'outlined'}
                 >
-                  <Button
-                    color="primary"
-                    className={classes.leadButton}
-                    variant={'outlined'}
-                  >
-                    {parse(leadData?.buttonTextHtml || 'Читать далее')}
-                  </Button>
-                </LinkToOutsidePage>
-              </div>
-            )}
+                  {parse(leadData?.buttonTextHtml || 'Читать далее')}
+                </Button>
+              </LinkToOutsidePage>
+            </div>
 
             <div className={classes.postBottomRow}>
               {bottomRow.map((e, i) => (

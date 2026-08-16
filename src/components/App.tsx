@@ -28,7 +28,6 @@ import isDarkTheme from 'src/utils/isDarkTheme'
 import useAutoChangeTheme from 'src/hooks/useAutoChangeTheme'
 import SideNavigationDrawer from './blocks/SideNavigationDrawer'
 import UpdateNotification from 'src/components/blocks/UpdateNotification'
-import useGetDownvoteReasons from 'src/hooks/useGetDownvoteReasons'
 import { useEffect } from 'react'
 
 interface StyleProps {
@@ -152,7 +151,6 @@ const App: React.FC = () => {
 
   useTitleChange()
   useAutoChangeTheme()
-  useGetDownvoteReasons()
 
   // Set root classes
   useEffect(() => {

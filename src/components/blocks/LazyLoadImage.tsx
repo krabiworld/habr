@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core'
 import { PhotoSwipe } from 'react-photoswipe'
 import { POST_ITEM_VISIBILITY_THRESHOLD } from 'src/config/constants'
-import { useSelector } from 'src/hooks'
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
@@ -202,13 +201,7 @@ const ImageUnmemoized = React.forwardRef<HTMLImageElement, ImageProps>(
 const Image = React.memo(ImageUnmemoized)
 
 const LazyLoadImage: React.FC<LazyLoadImageProps> = (props) => {
-  const shouldReplaceImagesWithPlaceholder = useSelector(
-    (store) => store.settings.readerSettings.replaceImagesWithPlaceholder
-  )
   const [isOpen, setOpen] = useState(false)
-  const [shouldShowImage, setShouldShowImage] = useState(
-    !shouldReplaceImagesWithPlaceholder
-  )
   const imageRef = useRef<HTMLImageElement>(null)
   const { style, alt, className, disableZoom, align, placeholderSrc } = props
   const showByDefault = !!placeholderSrc
@@ -252,47 +245,43 @@ const LazyLoadImage: React.FC<LazyLoadImageProps> = (props) => {
     setOpen(true)
   }
 
-  return shouldShowImage ? (
-    <>
-      <ProgressiveImage
-        placeholder={placeholderSrc}
-        src={props.src}
-        visibilitySensorProps={{
-          partialVisibility: true,
-          offset: {
-            top: showByDefault ? -Infinity : POST_ITEM_VISIBILITY_THRESHOLD,
-            bottom: showByDefault ? -Infinity : POST_ITEM_VISIBILITY_THRESHOLD,
-          },
-        }}
-      >
-        {(src: string, loading: boolean, isVisible: boolean) => (
-          <Image
-            ref={imageRef}
-            src={src}
-            onClick={onClick}
-            loading={loading}
-            isVisible={isVisible}
-            style={style}
-            alt={alt}
-            align={align}
-            className={className}
-          />
-        )}
-      </ProgressiveImage>
-      {isOpen && !disableZoom && imageRef.current && (
-        <Portal container={document.body}>
-          <PhotoSwipe
-            options={pswpOptions}
-            isOpen={isOpen}
-            items={items.current}
-            onClose={() => setOpen(false)}
-          />
-        </Portal>
+  return <>
+    <ProgressiveImage
+      placeholder={placeholderSrc}
+      src={props.src}
+      visibilitySensorProps={{
+        partialVisibility: true,
+        offset: {
+          top: showByDefault ? -Infinity : POST_ITEM_VISIBILITY_THRESHOLD,
+          bottom: showByDefault ? -Infinity : POST_ITEM_VISIBILITY_THRESHOLD,
+        },
+      }}
+    >
+      {(src: string, loading: boolean, isVisible: boolean) => (
+        <Image
+          ref={imageRef}
+          src={src}
+          onClick={onClick}
+          loading={loading}
+          isVisible={isVisible}
+          style={style}
+          alt={alt}
+          align={align}
+          className={className}
+        />
       )}
-    </>
-  ) : (
-    <ImagePlaceholder setShouldShowImage={setShouldShowImage} style={style} />
-  )
+    </ProgressiveImage>
+    {isOpen && !disableZoom && imageRef.current && (
+      <Portal container={document.body}>
+        <PhotoSwipe
+          options={pswpOptions}
+          isOpen={isOpen}
+          items={items.current}
+          onClose={() => setOpen(false)}
+        />
+      </Portal>
+    )}
+  </>
 }
 
 export default React.memo(LazyLoadImage)

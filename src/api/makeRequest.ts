@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import { API_TOKEN_URL, API_URL } from '../config/constants'
+import { API_URL } from '../config/constants'
 import * as userSettings from 'src/utils/userSettings'
 
 const CancelToken = axios.CancelToken

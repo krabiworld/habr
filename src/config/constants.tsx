@@ -1,4 +1,3 @@
-import React from 'react'
 import { ModeObject, FlowObject, UserSettings } from '../interfaces'
 import {
   darken,
@@ -18,7 +17,6 @@ import TabObject from 'src/interfaces/NavigationTabObject'
 import getCachedMode from 'src/utils/getCachedMode'
 
 export const API_URL = 'https://habr.com/kek/'
-export const API_TOKEN_URL = 'https://geekr-lambda.vercel.app/api/' // 'https://habra.jarvis394.ml/'
 
 export const MIN_WIDTH = 960
 export const MIDDLE_WIDTH = 1175
@@ -31,16 +29,13 @@ export const POST_ITEM_VISIBILITY_THRESHOLD = -1 * 500
 
 export const POST_IMAGE_HEIGHT = 212
 export const DEFAULT_POST_ITEM_HEIGHT = 390
-export const ADVERTS_BLOCK_HEIGHT = 128
-export const ADVERTS_BLOCK_MAX_WIDTH = 364
 export const BOTTOM_BAR_HEIGHT = 52
 export const APP_BAR_HEIGHT = 48
 export const DRAWER_WIDTH = 296
-export const THREAD_LEVEL = 7
 
 /** Local Storage keys */
-export const USER_SETTINGS_KEY = 'habra_USER_SETTINGS'
-export const NEEDS_UPDATE_KEY = 'habra_NEEDS_UPDATE'
+export const USER_SETTINGS_KEY = 'habr_USER_SETTINGS'
+export const NEEDS_UPDATE_KEY = 'habr_NEEDS_UPDATE'
 
 export const FLOWS: FlowObject[] = [
   {
@@ -152,40 +147,14 @@ export const RATING_MODES: ModeObject[] = [
   },
 ]
 
-export const POST_LABELS: Record<
-  string,
-  {
-    text: string
-    link?: string
-  }
-> = {
+export const POST_LABELS: Record<string, { text: string }> = {
   tutorial: { text: 'Туториал' },
   translation: { text: 'Перевод' },
   sandbox: { text: 'Из песочницы' },
   recovery: { text: 'Recovery' },
-  technotext2020: {
-    text: '🔥 Технотекст 2020',
-    link: 'https://contenting.io/challenge.html?utm_source=habr&utm_medium=label',
-  },
-  technotext2021: {
-    text: '🔥 Технотекст 2021',
-    link: 'https://contenting.io/2021.html',
-  },
-  technotext2022: {
-    text: '✏️ Технотекст 2022',
-    link: 'https://habr.com/ru/technotext/2022/',
-  },
-}
-
-export const DONATION_LINKS_MAP = {
-  paymentYandexMoney: 'https://money.yandex.ru/to/',
-  paymentPayPalMe: 'https://www.paypal.me/',
-  paymentWebmoney: 'https://pay.web.money/',
-}
-export const DONATION_TITLES_MAP = {
-  paymentYandexMoney: 'YooMoney',
-  paymentPayPalMe: 'PayPal.Me',
-  paymentWebmoney: 'Webmoney',
+  technotext2020: { text: '🔥 Технотекст 2020' },
+  technotext2021: { text: '🔥 Технотекст 2021' },
+  technotext2022: { text: '✏️ Технотекст 2022' },
 }
 
 export const HABR_BASE_REGEXP = /(habr|m\.habr)\.com\/(ru|en)\/(.+)/
@@ -202,13 +171,6 @@ export const HABR_LINKS_REPLACE_MAP = [
     regexp: /news\/t\/?(.+)[/]?/,
     to: '/post/[0]',
   },
-]
-
-export const READER_FONT_FAMILIES = [
-  'Google Sans',
-  'Roboto',
-  'Comic Sans',
-  'Comic Sans MS',
 ]
 
 export const makeNavigationTabs = (
@@ -232,13 +194,6 @@ export const makeNavigationTabs = (
       match: 'news',
     },
     {
-      label: 'Хабы',
-      icon: <Icon28ServicesOutline width={w} height={h} />,
-      to: () => '/hubs/p/1',
-      match: 'hubs',
-      tab: 'hubs',
-    },
-    {
       label: 'Поиск',
       icon: <Icon24Search width={w} height={h} />,
       to: () => '/search',
@@ -254,9 +209,6 @@ export const makeNavigationTabs = (
       match: [
         'settings',
         'settingsAppearance',
-        'settingsInterface',
-        'settingsBlacklist',
-        'settingsReader',
         'settingsLanguage',
       ],
       tab: 'settings',
@@ -271,27 +223,9 @@ export const chromeAddressBarHeight = 56
 
 export const DEFAULT_USER_SETTINGS: UserSettings = {
   themeType: 'light',
-  hiddenAuthors: [],
-  hiddenCompanies: [],
   preferredDarkTheme: 'dark',
   preferredLightTheme: 'light',
   autoChangeTheme: false,
-  readerSettings: {
-    fontFamily: 'Google Sans',
-    fontSize: 16,
-    changeLinks: false,
-    replaceImagesWithPlaceholder: false,
-  },
-  interfaceFeed: {
-    isCompact: false,
-    hideMegaposts: true,
-    disablePostImage: false,
-    openPostsInNewTab: false,
-  },
-  interfaceComments: {
-    showThreads: true,
-    sortByKarma: false,
-  },
   language: {
     feed: 'ru',
     interface: 'ru',

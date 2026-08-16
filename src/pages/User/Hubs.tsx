@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux'
 import { getProfileHubs } from 'src/store/actions/profile'
 import { useSelector } from 'src/hooks'
 import { Hub } from 'src/interfaces'
-import LinkToOutsidePage from 'src/components/blocks/LinkToOutsidePage'
 import getContrastPaperColor from 'src/utils/getContrastPaperColor'
 
 const useStyles = makeStyles((theme) => ({
@@ -65,11 +64,8 @@ export const HubsItem = ({ data }: { data: Hub }) => {
     <Grid
       item
       className={classes.item}
-      component={LinkToOutsidePage}
-      to={'/hub/' + data.alias + '/p/1'}
     >
       <Chip
-        style={{ cursor: 'pointer' }}
         title={data.descriptionHtml}
         className={classes.itemChip}
         variant="default"

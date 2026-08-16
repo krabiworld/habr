@@ -188,10 +188,7 @@ const CompanyCard: React.FC<{
   return (
     <div className={classes.root}>
       {company?.settings?.branding?.imageUrl && (
-        <a
-          className={classes.brandingLink}
-          href={company.settings.branding.linkUrl}
-        >
+        <div className={classes.brandingLink}>
           <Fade in>
             <img
               alt={company.alias}
@@ -199,17 +196,17 @@ const CompanyCard: React.FC<{
               src={company.settings.branding.imageUrl}
             />
           </Fade>
-        </a>
+        </div>
       )}
       <div className={classes.paper}>
         <div className={classes.flexRow}>
-          <a href={`https://habr.com/companies/${company.alias}/profile/`} target="_blank" className={classes.avatarLink}>
+          <div className={classes.avatarLink}>
             <UserAvatar
               className={classes.avatar}
               src={company.imageUrl}
               alias={company.alias}
             />
-          </a>
+          </div>
           <div
             className={classes.flexColumn}
             style={{ marginLeft: 16, marginRight: 16 }}
@@ -220,11 +217,7 @@ const CompanyCard: React.FC<{
             </Typography>
           </div>
         </div>
-        <a
-          href={`https://habr.com/companies/${company.alias}/profile/`}
-          target="_blank"
-          className={classes.companyNameAndDescription}
-        >
+        <div className={classes.companyNameAndDescription}>
           <FormattedText className={classes.companyName}>
             {company.titleHtml || ''}
           </FormattedText>
@@ -233,7 +226,7 @@ const CompanyCard: React.FC<{
               {company.descriptionHtml}
             </FormattedText>
           )}
-        </a>
+        </div>
       </div>
     </div>
   )

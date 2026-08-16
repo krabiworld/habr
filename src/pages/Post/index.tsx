@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useEffect } from 'react'
-import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import {
@@ -36,7 +35,6 @@ import { Hub } from 'src/interfaces'
 import AuthorCard from './AuthorCard'
 import CompanyCard from './CompanyCard'
 import CompanyCardWithLinks from './CompanyCardWithLinks'
-import postSendPageview from 'src/api/postSendPageview'
 
 const makeGradient = (theme: Theme) => {
   const t =
@@ -83,9 +81,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 13,
     transitionDuration: '100ms',
     textDecoration: 'none',
-    '&:hover': {
-      color: theme.palette.primary.light,
-    },
     ...theme.typography.body2,
   },
   hubWrapper: {
@@ -261,7 +256,7 @@ const Post = () => {
           color="primary"
           size="small"
           key={i}
-          component={labelData.link ? MUILink : 'span'}
+          component={'span'}
           style={{ marginRight: 8, marginTop: 8 }}
         />
       ) : null
@@ -278,24 +273,6 @@ const Post = () => {
   if (fetchError) return <ErrorComponent message={fetchError} />
   if (companyFetchError)
     console.error('Could not fetch company data:', companyFetchError)
-
-  if (post && post?.postType === 'megaproject') {
-    return (
-      <Container style={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography variant="h5">
-          Мегапосты в текущее время не поддерживаются.
-        </Typography>
-        <MUILink
-          href={'https://habr.com/ru/post/' + id}
-          rel="noreferrer"
-          target="_blank"
-          style={{ paddingTop: 16 }}
-        >
-          Смотреть на habr.com
-        </MUILink>
-      </Container>
-    )
-  }
 
   return (
     <OutsidePage
@@ -387,12 +364,9 @@ const Post = () => {
                     <div className={classes.hubs}>
                       {post.hubs.map((hub, i) => (
                         <span key={i} className={classes.hubWrapper}>
-                          <Link
-                            className={classes.hubLink}
-                            to={'/hub/' + hub.alias + '/p/1'}
-                          >
+                          <span className={classes.hubLink}>
                             {hub.title}
-                          </Link>
+                          </span>
                         </span>
                       ))}
                     </div>

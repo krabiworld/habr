@@ -3,7 +3,6 @@ import { useHistory, useParams } from 'react-router'
 import {
   CircularProgress,
   Fade,
-  IconButton,
   rgbToHex,
   Typography,
   useTheme,
@@ -14,12 +13,10 @@ import { useDispatch } from 'react-redux'
 import {
   getPost,
   getPostComments,
-  parsePostComments,
 } from 'src/store/actions/post'
 import { useSelector } from 'src/hooks'
 import { FetchingState } from 'src/interfaces'
 import Comment from './Comment'
-import { Icon24Filter } from '@vkontakte/icons'
 import {
   APP_BAR_HEIGHT,
   BOTTOM_BAR_HEIGHT,
@@ -100,7 +97,6 @@ const CommentsPage: React.FC = () => {
   const post = useSelector((store) => store.post.post.data)
   const postFetchingState = useSelector((store) => store.post.post.state)
   const postFetchingError = useSelector((store) => store.post.post.fetchError)
-  const commentsStoreData = useSelector((store) => store.post.comments)
   const comments = useSelector((store) => store.post.comments.comments)
   const commentsFetchingState = useSelector(
     (store) => store.post.comments.state
@@ -115,36 +111,18 @@ const CommentsPage: React.FC = () => {
   const selectedCommentID = history.location.hash || null
   const [commentsLength, setCommentsLength] = useState<number>()
   const shouldShowComments = commentsFetchingState === FetchingState.Fetched
-  const shouldShowThreads = useSelector(
-    (store) => store.settings.interfaceComments.showThreads
-  )
-  const shouldSortByKarma = useSelector(
-    (store) => store.settings.interfaceComments.sortByKarma
-  )
-  const parseOptions = useMemo(
-    () => ({ sortByKarma: shouldSortByKarma }),
-    [shouldSortByKarma]
-  )
   const filteredComments = useMemo(() => {
     if (!comments) return []
-    if (shouldShowThreads)
-      // Only show comments that are not in thread
-      return comments.filter((e) => e.threadLevel === 0) || []
-    // Set max level so comments do not overflow
-    else
-      return comments.map((e) => ({
-        ...e,
-        level: Math.min(e.level, MAX_LEVEL),
-      }))
-  }, [comments, shouldShowThreads])
-
-  const goToCommentsSettings = () =>
-    history.push('/settings/interface', { highlightSection: 'comments' })
+    return comments.map((e) => ({
+      ...e,
+      level: Math.min(e.level, MAX_LEVEL),
+    }))
+  }, [comments])
 
   useEffect(() => {
     if (!post || post?.id !== id) dispatch(getPost(id))
     if (!comments) {
-      dispatch(getPostComments(id, parseOptions))
+      dispatch(getPostComments(id))
       setCommentsLength(0)
     }
     if (comments) {
@@ -153,17 +131,6 @@ const CommentsPage: React.FC = () => {
     // TODO: fix deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, comments])
-
-  useEffect(() => {
-    if (
-      JSON.stringify(commentsStoreData.parseOptions) !==
-      JSON.stringify(parseOptions)
-    ) {
-      dispatch(parsePostComments(id, parseOptions))
-    }
-    // TODO: fix deps
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(parseOptions)])
 
   useEffect(() => {
     if (
@@ -211,14 +178,6 @@ const CommentsPage: React.FC = () => {
                 </Fade>
               )}
             </Typography>
-            <div className={classes.filterButtonWrapper}>
-              <IconButton
-                className={classes.filterButton}
-                onClick={goToCommentsSettings}
-              >
-                <Icon24Filter />
-              </IconButton>
-            </div>
           </div>
           {shouldShowComments &&
             filteredComments.map((e, i) => (

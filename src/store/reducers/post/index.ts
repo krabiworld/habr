@@ -5,16 +5,13 @@ import {
   COMPANY_FETCH,
   COMPANY_FETCH_FULFILLED,
   COMPANY_FETCH_REJECTED,
-  POST_DOWNVOTE_REASONS_FETCH,
-  POST_DOWNVOTE_REASONS_FETCH_FULFILLED,
-  POST_DOWNVOTE_REASONS_FETCH_REJECTED,
   POST_FETCH,
   POST_FETCH_FULFILLED,
   POST_FETCH_REJECTED,
   SET_POST_COMMENT_SIZE,
   State,
 } from './types'
-import { DownvoteReasons, FetchingState } from 'src/interfaces'
+import { FetchingState } from 'src/interfaces'
 
 const initialData = {
   data: null,
@@ -27,14 +24,12 @@ const initialCommentsData = {
   state: FetchingState.Idle,
   fetchError: null,
   sizesMap: {},
-  parseOptions: {},
 }
 
 const initialState: State = {
   post: initialData,
   comments: initialCommentsData,
   company: initialData,
-  downvoteReasons: initialData,
 }
 
 // TODO: fix types
@@ -103,7 +98,6 @@ export default (storeState = initialState, { type, payload }): State => {
           fetchedData: payload.fetchedData,
           comments: payload.comments,
           sizesMap: {},
-          parseOptions: payload.parseOptions,
         },
       }
 
@@ -120,7 +114,6 @@ export default (storeState = initialState, { type, payload }): State => {
           fetchedData: null,
           comments: null,
           sizesMap: {},
-          parseOptions: {},
         },
       }
 
@@ -151,37 +144,6 @@ export default (storeState = initialState, { type, payload }): State => {
           state: FetchingState.Error,
           fetchError: payload,
           data: null,
-        },
-      }
-
-    case POST_DOWNVOTE_REASONS_FETCH:
-      return {
-        ...storeState,
-        downvoteReasons: {
-          ...initialData,
-          state: FetchingState.Fetching,
-        },
-      }
-
-    case POST_DOWNVOTE_REASONS_FETCH_FULFILLED:
-      return {
-        ...storeState,
-        downvoteReasons: {
-          state: FetchingState.Fetched,
-          fetchError: null,
-          data: Object.values((payload as DownvoteReasons).data).sort(
-            (a, b) => a.order - b.order
-          ),
-        },
-      }
-
-    case POST_DOWNVOTE_REASONS_FETCH_REJECTED:
-      return {
-        ...storeState,
-        downvoteReasons: {
-          state: FetchingState.Error,
-          fetchError: payload,
-          data: initialData.data,
         },
       }
 
