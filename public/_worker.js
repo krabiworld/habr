@@ -1,14 +1,5 @@
 import htmlTemplate from './index.html';
 
-function escapeHtml(str) {
-  return (str || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -30,13 +21,10 @@ export default {
           if (apiResponse.ok) {
             const post = await apiResponse.json();
 
-            const title = escapeHtml(post.titleHtml);
-            const description = escapeHtml(post.metadata.metaDescription);
-
             const metaTags = `
-              <title>${title}</title>
-              <meta property="og:title" content="${title}" />
-              <meta property="og:description" content="${description}" />
+              <title>${post.titleHtml}</title>
+              <meta property="og:title" content="${post.titleHtml}" />
+              <meta property="og:description" content="${post.metadata.metaDescription}" />
               <meta property="og:image" content="${post.metadata.shareImageUrl}" />
               <meta property="og:url" content="${url.href}" />
             `;
