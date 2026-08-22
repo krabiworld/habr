@@ -1,5 +1,14 @@
 import htmlTemplate from './index.html';
 
+function escapeHtml(str) {
+  return (str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -9,9 +18,7 @@ export default {
     }
 
     try {
-      let metaTags = '';
       const path = url.pathname;
-
       const isDirectPost = path.startsWith('/post/');
       const isCompanyBlog = path.startsWith('/company/') && path.includes('/blog/');
 
@@ -19,28 +26,48 @@ export default {
         const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
         const postId = cleanPath.split('/').pop();
 
-        if (!postId) {
-          return
-        }
+        if (postId) {
+          const apiResponse = await fetch(`https://habr.com/kek/v2/articles/${postId}`);
 
-        const apiResponse = await fetch(`https://habr.com/kek/v2/articles/${postId}`);
+          if (apiResponse.ok) {
+            const post = await apiResponse.json();
 
-        if (apiResponse.ok) {
-          const post = await apiResponse.json();
-          metaTags = `
-            <title>${post.titleHtml}</title>
-            <meta property="og:title" content="${post.titleHtml}" />
-            <meta property="og:description" content="${post.metadata.metaDescription}" />
-            <meta property="og:image" content="${post.metadata.shareImageUrl}" />
-            <meta property="og:url" content="${url.href}" />
-            <meta name="twitter:card" content="summary_large_image" />
-          `;
+            const title = escapeHtml(post.titleHtml);
+            const description = escapeHtml(post.metadata?.metaDescription);
+            const image = escapeHtml(post.metadata?.shareImageUrl);
+
+            const metaTags = `
+              <title>${title}</title>
+              <meta name="description" content="${description}">
+              <meta property="og:site_name" content="habr">
+              <meta property="og:title" content="${title}" />
+              <meta property="og:type" content="article" />
+              <meta property="og:description" content="${description}" />
+              <meta property="og:image" content="${image}" />
+              <meta property="og:url" content="${url.href}" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="${title}" />
+              <meta name="twitter:description" content="${description}" />
+              <meta name="twitter:image" content="${image}" />
+            `;
+
+            const response = new Response(htmlTemplate, {
+              headers: { 'content-type': 'text/html;charset=UTF-8' },
+            });
+
+            return new HTMLRewriter()
+              .on('title', { element(el) { el.remove(); } })
+              .on('head', {
+                element(el) {
+                  el.append(metaTags, { html: true });
+                },
+              })
+              .transform(response);
+          }
         }
       }
 
-      const finalHtml = htmlTemplate.replace('</head>', `${metaTags}</head>`);
-
-      return new Response(finalHtml, {
+      return new Response(htmlTemplate, {
         headers: { 'content-type': 'text/html;charset=UTF-8' },
       });
 
