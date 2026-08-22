@@ -32,13 +32,12 @@ export default {
 
             const title = escapeHtml(post.titleHtml);
             const description = escapeHtml(post.metadata.metaDescription);
-            const image = escapeHtml(post.metadata.shareImageUrl);
 
             const metaTags = `
               <title>${title}</title>
               <meta property="og:title" content="${title}" />
               <meta property="og:description" content="${description}" />
-              <meta property="og:image" content="${image}" />
+              <meta property="og:image" content="${post.metadata.shareImageUrl}" />
               <meta property="og:url" content="${url.href}" />
             `;
 
