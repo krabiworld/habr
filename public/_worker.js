@@ -33,18 +33,24 @@ export default {
             const post = await apiResponse.json();
 
             const title = escapeHtml(post.titleHtml);
-            const description = escapeHtml(post.metadata?.metaDescription);
-            const image = escapeHtml(post.metadata?.shareImageUrl);
+            const description = escapeHtml(post.metadata.metaDescription);
+            const image = escapeHtml(post.metadata.shareImageUrl);
 
             const metaTags = `
               <title>${title}</title>
               <meta name="description" content="${description}">
+              <meta name="author" content="${post.author.alias}">
               <meta property="og:site_name" content="habr">
               <meta property="og:title" content="${title}" />
               <meta property="og:type" content="article" />
               <meta property="og:description" content="${description}" />
               <meta property="og:image" content="${image}" />
+              <meta property="og:image:width" content="${post.metadata.shareImageWidth}" />
+              <meta property="og:image:height" content="${post.metadata.shareImageHeight}" />
+              <meta property="og:locale" content="${post.lang === "ru" ? "ru_RU" : "en_US"}" />
               <meta property="og:url" content="${url.href}" />
+              <meta property="article:author" content="${post.author.alias}" />
+              <meta property="article:published_time" content="${post.timePublished}" />
               <meta name="twitter:card" content="summary_large_image" />
               <meta name="twitter:title" content="${title}" />
               <meta name="twitter:description" content="${description}" />
