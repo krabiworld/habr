@@ -1,14 +1,5 @@
 import htmlTemplate from './index.html';
 
-function escapeHtml(str) {
-  return (str || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -19,10 +10,8 @@ export default {
 
     try {
       const path = url.pathname;
-      const isDirectPost = path.startsWith('/post/');
-      const isCompanyBlog = path.startsWith('/company/') && path.includes('/blog/');
 
-      if (isDirectPost || isCompanyBlog) {
+      if (path.startsWith('/post/') || path.startsWith('/company/')) {
         const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
         const postId = cleanPath.split('/').pop();
 
@@ -32,15 +21,11 @@ export default {
           if (apiResponse.ok) {
             const post = await apiResponse.json();
 
-            const title = escapeHtml(post.titleHtml);
-            const description = escapeHtml(post.metadata.metaDescription);
-            const image = escapeHtml(post.metadata.shareImageUrl);
-
             const metaTags = `
               <title>${title}</title>
-              <meta property="og:title" content="${title}" />
-              <meta property="og:description" content="${description}" />
-              <meta property="og:image" content="${image}" />
+              <meta property="og:title" content="${post.titleHtml}" />
+              <meta property="og:description" content="${post.metadata.metaDescription}" />
+              <meta property="og:image" content="${post.metadata.shareImageUrl}" />
               <meta property="og:url" content="${url.href}" />
             `;
 
@@ -63,7 +48,6 @@ export default {
       return new Response(htmlTemplate, {
         headers: { 'content-type': 'text/html;charset=UTF-8' },
       });
-
     } catch (e) {
       return new Response(htmlTemplate, {
         headers: { 'content-type': 'text/html;charset=UTF-8' },
