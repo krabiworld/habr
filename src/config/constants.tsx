@@ -1,10 +1,11 @@
 import { ModeObject, UserSettings } from '../interfaces'
 import {
+  lighten,
   darken,
   alpha,
   PaletteType as MUIPaletteType,
 } from '@material-ui/core'
-import { pink, blue } from '@material-ui/core/colors'
+import { green } from '@material-ui/core/colors'
 import {
   Icon28Newsfeed,
   Icon28SettingsOutline,
@@ -219,24 +220,24 @@ export const BACKGROUND_COLORS_PAPER = {
 
 export const THEME_PRIMARY_COLORS = {
   light: {
-    main: pink[500],
-    light: pink[500],
-    dark: blue.A700,
+    main: green[400],
+    light: green[200],
+    dark: green[700],
   },
   dark: {
-    main: pink[500],
-    light: pink[500],
-    dark: darken(blue.A100, 0.1),
+    main: green[100],
+    light: lighten(green[100], 0.05),
+    dark: darken(green[100], 0.1),
   },
   oled: {
-    main: pink[500],
-    light: pink[500],
-    dark: darken(blue.A100, 0.1),
+    main: green[100],
+    light: lighten(green[100], 0.05),
+    dark: darken(green[100], 0.1),
   },
   dimmed: {
-    main: pink[500],
-    light: pink[500],
-    dark: darken(blue.A100, 0.1),
+    main: green[100],
+    light: lighten(green[100], 0.05),
+    dark: darken(green[100], 0.1),
   },
 }
 
@@ -248,16 +249,16 @@ export const THEME_TEXT_COLORS = {
     hint: 'rgba(0, 0, 0, 0.38)',
   },
   dark: {
-    primary: '#09a861',
-    secondary: alpha('#09a861', 0.54),
-    disabled: alpha('#09a861', 0.38),
-    hint: alpha('#09a861', 0.38),
+    primary: '#e9e9e9',
+    secondary: alpha('#e9e9e9', 0.54),
+    disabled: alpha('#e9e9e9', 0.38),
+    hint: alpha('#e9e9e9', 0.38),
   },
   oled: {
-    primary: '#09a861',
-    secondary: alpha('#09a861', 0.54),
-    disabled: alpha('#09a861', 0.38),
-    hint: alpha('#09a861', 0.38),
+    primary: '#e9e9e9',
+    secondary: alpha('#e9e9e9', 0.54),
+    disabled: alpha('#e9e9e9', 0.38),
+    hint: alpha('#e9e9e9', 0.38),
   },
   dimmed: {
     primary: '#cdd9e5',
